@@ -80,9 +80,15 @@ header nav ul li a:hover {
 }
 
 .hero-content h1 {
-    font-size: 64px;
-    margin-bottom: 20px;
-    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Initial spacing between words */
+    position: relative;
+}
+
+.hero-content .word {
+    position: relative;
+    transition: transform 0.5s ease-out;
 }
 
 .hero-content p {
