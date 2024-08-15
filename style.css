@@ -25,10 +25,23 @@ header nav {
     padding: 0 30px;
 }
 
+header nav .logo {
+    display: flex;
+    align-items: center;
+}
+
 header nav .logo img {
     height: 50px; /* Adjust the size of the logo */
     width: auto;
     vertical-align: middle;
+    margin-right: 10px; /* Add some space between the logo and your name */
+}
+
+header nav .logo span {
+    font-size: 24px;
+    color: #333;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 header nav ul {
