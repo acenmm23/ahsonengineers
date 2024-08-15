@@ -1,14 +1,14 @@
 /* Global Styles */
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    color: #333;
-    background-color: #f4f4f4;
+    color: #fff;
+    background-color: #000;
 }
 
 header {
-    background-color: #0077cc;
+    background-color: #111;
     padding: 10px 0;
     position: fixed;
     width: 100%;
@@ -25,7 +25,7 @@ header nav {
 
 header nav .logo a {
     color: white;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
     font-size: 24px;
 }
@@ -42,126 +42,62 @@ header nav ul li {
 header nav ul li a {
     color: white;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .hero {
-    background: url('your-image.jpg') no-repeat center center/cover;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
     text-align: center;
 }
 
-.hero-content {
-    max-width: 600px;
-}
-
-.cta {
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #0077cc;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    display: inline-block;
-    transition: background-color 0.3s;
-}
-
-.cta:hover {
-    background-color: #0077cc;
-    color: #fff;
+.hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
 }
 
 .about,
 .projects,
-.skills,
 .contact {
-    padding: 80px 20px;
+    padding: 100px 20px;
     text-align: center;
 }
 
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
-.project-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.skill-bars .skill {
-    margin: 20px 0;
-    text-align: left;
-}
-
-.skill .progress-bar {
-    width: 100%;
-    background-color: #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.skill .progress-bar span {
-    display: block;
-    height: 12px;
-    background-color: #0077cc;
-}
-
-.contact form {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.contact form input,
-.contact form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.contact form button {
-    padding: 10px 20px;
-    background-color: #0077cc;
+.tablink {
+    background-color: #111;
     color: white;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
+    margin: 0 10px;
     transition: background-color 0.3s;
 }
 
-.contact form button:hover {
-    background-color: #005fa3;
+.tablink:hover {
+    background-color: #333;
+}
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 5px;
 }
 
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #0077cc;
-    color: white;
+    background-color: #111;
 }
 
-.socials {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.socials li {
-    margin: 0 10px;
-}
-
-.socials a {
-    color: white;
-    font-size: 20px;
+button:focus {
+    outline: none;
 }

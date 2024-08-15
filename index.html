@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahson Momin | Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <header>
         <nav>
             <div class="logo"><a href="#home">Ahson Momin</a></div>
             <ul>
+                <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -27,7 +24,6 @@
         <div class="hero-content">
             <h1>Ahson Momin</h1>
             <p>Electrical Engineering Student | Future Innovator</p>
-            <a href="#projects" class="cta">View My Work</a>
         </div>
     </section>
 
@@ -38,45 +34,25 @@
 
     <section id="projects" class="projects">
         <h2>Projects</h2>
-        <div class="project-grid">
-            <!-- Project Cards -->
-            <div class="project-card">
-                <h3>Smart Drone Security System</h3>
-                <p>Developed a drone security system capable of real-time monitoring and threat detection for large-scale farms.</p>
-            </div>
-            <div class="project-card">
-                <h3>Electric Powered Stroller</h3>
-                <p>A concept project aiming to create a motorized stroller with advanced safety features.</p>
-            </div>
-            <div class="project-card">
-                <h3>Renewable Energy Design</h3>
-                <p>Designed a small-scale renewable energy system using solar and wind power for off-grid applications.</p>
-            </div>
+        <div class="tabs">
+            <button class="tablink" onclick="openProject(event, 'Project1')">Project 1</button>
+            <button class="tablink" onclick="openProject(event, 'Project2')">Project 2</button>
+            <button class="tablink" onclick="openProject(event, 'Project3')">Project 3</button>
         </div>
-    </section>
 
-    <section id="skills" class="skills">
-        <h2>Skills</h2>
-        <div class="skill-bars">
-            <!-- Skills will go here -->
-            <div class="skill">
-                <p>JavaScript</p>
-                <div class="progress-bar">
-                    <span style="width: 80%;"></span>
-                </div>
-            </div>
-            <div class="skill">
-                <p>Python</p>
-                <div class="progress-bar">
-                    <span style="width: 75%;"></span>
-                </div>
-            </div>
-            <div class="skill">
-                <p>C++</p>
-                <div class="progress-bar">
-                    <span style="width: 70%;"></span>
-                </div>
-            </div>
+        <div id="Project1" class="tabcontent">
+            <h3>Smart Drone Security System</h3>
+            <p>Developed a drone security system capable of real-time monitoring and threat detection for large-scale farms.</p>
+        </div>
+
+        <div id="Project2" class="tabcontent">
+            <h3>Electric Powered Stroller</h3>
+            <p>A concept project aiming to create a motorized stroller with advanced safety features.</p>
+        </div>
+
+        <div id="Project3" class="tabcontent">
+            <h3>Renewable Energy Design</h3>
+            <p>Designed a small-scale renewable energy system using solar and wind power for off-grid applications.</p>
         </div>
     </section>
 
@@ -92,13 +68,11 @@
 
     <footer>
         <p>&copy; 2024 Ahson Momin. All rights reserved.</p>
-        <ul class="socials">
-            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-            <li><a href="#"><i class="fab fa-github"></i></a></li>
-        </ul>
     </footer>
 
     <script src="script.js"></script>
 </body>
-
 </html>
+ 
+
+<!--haj-->
