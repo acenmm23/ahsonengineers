@@ -3,19 +3,19 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    color: #fff;
-    background-color: #000;
+    color: #333;
+    background-color: #fff;
     scroll-behavior: smooth;
 }
 
 header {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #fff;
     padding: 15px 0;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header nav {
@@ -25,11 +25,10 @@ header nav {
     padding: 0 30px;
 }
 
-header nav .logo a {
-    color: white;
-    font-weight: 700;
-    text-decoration: none;
-    font-size: 28px;
+header nav .logo img {
+    height: 50px; /* Adjust the size of the logo */
+    width: auto;
+    vertical-align: middle;
 }
 
 header nav ul {
@@ -42,7 +41,7 @@ header nav ul li {
 }
 
 header nav ul li a {
-    color: white;
+    color: #333;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -58,8 +57,8 @@ header nav ul li a:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(to right, #000, #333);
-    color: white;
+    background-color: #f5f5f5;
+    color: #333;
     padding: 0 20px;
 }
 
@@ -101,9 +100,10 @@ header nav ul li a:hover {
 }
 
 .project-card {
-    background-color: #111;
+    background-color: #fff;
     padding: 30px;
     border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
@@ -114,8 +114,8 @@ header nav ul li a:hover {
 footer {
     text-align: center;
     padding: 30px;
-    background-color: #111;
-    color: white;
+    background-color: #f5f5f5;
+    color: #333;
 }
 
 footer p {
