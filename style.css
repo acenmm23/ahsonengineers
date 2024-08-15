@@ -30,6 +30,10 @@ header nav .logo {
     align-items: center;
 }
 
+header nav .logo a {
+    text-decoration: none; /* Remove underline from logo and name */
+}
+
 header nav .logo img {
     height: 50px; /* Adjust the size of the logo */
     width: auto;
@@ -55,7 +59,7 @@ header nav ul li {
 
 header nav ul li a {
     color: #333;
-    text-decoration: none;
+    text-decoration: none; /* Ensure no underline on navigation links */
     font-weight: 500;
     transition: color 0.3s ease;
 }
