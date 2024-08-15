@@ -1,57 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahson Momin | Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header>
-        <h1>Ahson Momin</h1>
-        <p>Electrical Engineering Student | Future Innovator</p>
         <nav>
+            <div class="logo"><a href="#home">Ahson Momin</a></div>
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <section id="about">
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Ahson Momin</h1>
+            <p>Electrical Engineering Student | Future Innovator</p>
+            <a href="#projects" class="cta">View My Work</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
         <h2>About Me</h2>
-        <p>I'm an Electrical Engineering student at UCSC, passionate about developing innovative solutions. This portfolio showcases some of the projects I've worked on.</p>
+        <p>I'm an Electrical Engineering student at UCSC, passionate about developing innovative solutions.</p>
     </section>
 
-    <section id="projects">
+    <section id="projects" class="projects">
         <h2>Projects</h2>
-        <div class="project">
-            <h3>Project 1: Smart Drone Security System</h3>
-            <p>Developed a drone security system capable of real-time monitoring and threat detection for large-scale farms.</p>
-        </div>
-        <div class="project">
-            <h3>Project 2: Electric Powered Stroller (Concept)</h3>
-            <p>A concept project aiming to create a motorized stroller with advanced safety features.</p>
-        </div>
-        <div class="project">
-            <h3>Project 3: Renewable Energy Design</h3>
-            <p>Designed a small-scale renewable energy system using solar and wind power for off-grid applications.</p>
+        <div class="project-grid">
+            <!-- Project Cards -->
+            <div class="project-card">
+                <h3>Smart Drone Security System</h3>
+                <p>Developed a drone security system capable of real-time monitoring and threat detection for large-scale farms.</p>
+            </div>
+            <div class="project-card">
+                <h3>Electric Powered Stroller</h3>
+                <p>A concept project aiming to create a motorized stroller with advanced safety features.</p>
+            </div>
+            <div class="project-card">
+                <h3>Renewable Energy Design</h3>
+                <p>Designed a small-scale renewable energy system using solar and wind power for off-grid applications.</p>
+            </div>
         </div>
     </section>
 
-    <section id="contact">
+    <section id="skills" class="skills">
+        <h2>Skills</h2>
+        <div class="skill-bars">
+            <!-- Skills will go here -->
+            <div class="skill">
+                <p>JavaScript</p>
+                <div class="progress-bar">
+                    <span style="width: 80%;"></span>
+                </div>
+            </div>
+            <div class="skill">
+                <p>Python</p>
+                <div class="progress-bar">
+                    <span style="width: 75%;"></span>
+                </div>
+            </div>
+            <div class="skill">
+                <p>C++</p>
+                <div class="progress-bar">
+                    <span style="width: 70%;"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
         <h2>Contact Me</h2>
-        <p>If you'd like to discuss a project or just want to say hello, feel free to reach out!</p>
-        <ul>
-            <li>Email: <a href="mailto:yourname@example.com">yourname@example.com</a></li>
-            <li>LinkedIn: <a href="https://www.linkedin.com/in/yourprofile" target="_blank">yourprofile</a></li>
-            <li>GitHub: <a href="https://github.com/yourgithub" target="_blank">yourgithub</a></li>
-        </ul>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
     </section>
 
     <footer>
         <p>&copy; 2024 Ahson Momin. All rights reserved.</p>
+        <ul class="socials">
+            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="#"><i class="fab fa-github"></i></a></li>
+        </ul>
     </footer>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
