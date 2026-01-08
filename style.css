@@ -1,146 +1,112 @@
-/* Global Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    background-color: #fff;
-    scroll-behavior: smooth;
-}
-
-header {
-    background-color: #fff;
-    padding: 15px 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-}
-
-header nav .logo {
-    display: flex;
-    align-items: center;
-}
-
-header nav .logo a {
-    text-decoration: none; /* Remove underline from logo and name */
-}
-
-header nav .logo img {
-    height: 50px; /* Adjust the size of the logo */
-    width: auto;
-    vertical-align: middle;
-    margin-right: 10px; /* Add some space between the logo and your name */
-}
-
-header nav .logo span {
-    font-size: 24px;
-    color: #333;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-header nav ul {
-    display: flex;
-    list-style: none;
-}
-
-header nav ul li {
-    margin: 0 20px;
-}
-
-header nav ul li a {
-    color: #333;
-    text-decoration: none; /* Ensure no underline on navigation links */
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-header nav ul li a:hover {
-    color: #007aff;
+  background: #0f0f0f;
+  color: #f5f5f5;
+  line-height: 1.6;
 }
 
 .hero {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: #f5f5f5;
-    color: #333;
-    padding: 0 20px;
+  min-height: 100vh;
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 900px;
+  margin: auto;
 }
 
-.hero-content h1 {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* Initial spacing between words */
-    position: relative;
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
 }
 
-.hero-content .word {
-    position: relative;
-    transition: transform 0.5s ease-out;
+.subtitle {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-top: 10px;
 }
 
-.hero-content p {
-    font-size: 24px;
-    margin-bottom: 40px;
+.tagline {
+  margin-top: 20px;
+  max-width: 600px;
+  font-size: 1.1rem;
 }
 
-.cta {
-    padding: 15px 30px;
-    background-color: #007aff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+.hero-buttons {
+  margin-top: 30px;
 }
 
-.cta:hover {
-    background-color: #005bb5;
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  margin-right: 12px;
+  background: #ffffff;
+  color: #0f0f0f;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 6px;
 }
 
-.about,
-.projects,
-.contact {
-    padding: 120px 20px;
-    text-align: center;
+.btn.outline {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
 }
 
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
+.section {
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 0 20px;
 }
 
-.project-card {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
 }
 
-.project-card:hover {
-    transform: translateY(-10px);
+.project {
+  margin-bottom: 40px;
 }
 
-footer {
-    text-align: center;
-    padding: 30px;
-    background-color: #f5f5f5;
-    color: #333;
+.project h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
 }
 
-footer p {
-    margin: 0;
+.tech {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.skills {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.skills li {
+  background: #1a1a1a;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.about {
+  max-width: 600px;
+}
+
+.contact a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.links {
+  margin-top: 10px;
+  opacity: 0.8;
 }
