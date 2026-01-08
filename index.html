@@ -1,68 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahson Momin | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahson — Engineer & Builder</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <a href="#home">
-                    <img src="images/amlogo.png" alt="AM Logo">
-                    <span>Ahson Momin</span>
-                </a>
-            </div>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>
-                <span class="word" id="word1">Innovate.</span>
-                <span class="word" id="word2">Design.</span>
-                <span class="word" id="word3">Create.</span>
-            </h1>
-            <p>Building the future one freakbob at a time.</p>
-            <a href="#projects" class="cta">Explore My Work</a>
-        </div>
-    </section>
+  <header class="hero">
+    <h1>Ahson Momin</h1>
+    <p class="subtitle">Engineer · Builder · Hardware & Systems</p>
+    <p class="tagline">
+      I design and build real products — from electronics and CAD to full systems.
+    </p>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn">View Work</a>
+      <a href="#contact" class="btn outline">Contact</a>
+    </div>
+  </header>
 
-    <section id="about" class="about">
-        <h2>About Me</h2>
-        <p>As an Electrical Engineering student at UCSC, I am passionate about developing innovative solutions that push the boundaries of technology.</p>
-    </section>
+  <section id="projects" class="section">
+    <h2>Featured Projects</h2>
 
-    <section id="projects" class="projects">
-        <h2>Projects</h2>
-        <div class="project-grid">
-            <!-- Project Cards -->
-            <div class="project-card">
-                <h3>Smart Drone Security System</h3>
-                <p>Real-time monitoring and threat detection system for large-scale farms.</p>
-            </div>
-            <div class="project-card">
-                <h3>Electric Powered Stroller</h3>
-                <p>Concept for a motorized stroller with advanced safety features.</p>
-            </div>
-            <div class="project-card">
-                <h3>TheBetterKey</h3>
-                <p> A simple smart lock than can be opened with a simple click of a BetterKey button. thebetterkey.com </p>
-            </div>
-        </div>
-    </section>
+    <div class="project">
+      <h3>TheBetterKey</h3>
+      <p>
+        A physical access system inspired by car key technology — focused on simplicity,
+        offline reliability, and accessibility. Involves electronics prototyping, CAD,
+        enclosure design, and system-level thinking.
+      </p>
+      <span class="tech">Electronics · CAD · Prototyping · Systems Design</span>
+    </div>
 
-    <section id="contact" class="contact">
-        <h2>Contact Me</h2>
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input
+    <div class="project">
+      <h3>Accessory Dwelling Unit (ADU) Design</h3>
+      <p>
+        Full architectural and structural design following strict city regulations.
+        Real-world constraints, code compliance, and iterative design decisions.
+      </p>
+      <span class="tech">Revit · Engineering Constraints · Real-World Design</span>
+    </div>
+
+    <div class="project">
+      <h3>Bruin AI / SlugAI – Product & Design Work</h3>
+      <p>
+        Contributed to product design and system planning for student-focused AI tools.
+        Emphasis on usability, structure, and real deployment considerations.
+      </p>
+      <span class="tech">Product Design · Systems Thinking · UX</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Skills & Tools</h2>
+    <ul class="skills">
+      <li>Electronics Prototyping</li>
+      <li>CAD & Mechanical Design</li>
+      <li>System-Level Engineering</li>
+      <li>Revit & Architectural Modeling</li>
+      <li>Basic Web (HTML/CSS/JS)</li>
+      <li>Technical Documentation</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>About</h2>
+    <p class="about">
+      I’m an electrical engineering student who spends most of his time building.
+      I care about products that actually work, designs that respect constraints,
+      and learning by doing — not just theory.
+    </p>
+  </section>
+
+  <section id="contact" class="section contact">
+    <h2>Get in Touch</h2>
+    <p>
+      <a href="mailto:ahsonmomin@gmail.com">ahsonmomin@gmail.com</a>
+    </p>
+    <p class="links">
+      <a href="https://github.com/noshA05" target="_blank">GitHub</a> ·
+      <a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
+    </p>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
