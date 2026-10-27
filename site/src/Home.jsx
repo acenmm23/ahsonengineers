@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { links, media, portrait, projects } from './content.js'
 import { Header, Contact, Photo, Arrow, LittleLedgerPanel } from './components.jsx'
 
-// The name is set twice: the real <h1>, and an aria-hidden light copy masked to the
-// portrait's silhouette so "Momin" turns light exactly where it crosses it.
+// "Ahson" sits behind the portrait; "Momin" sits in front of it, outlined.
 function NameLines() {
   return (
     <>
@@ -14,8 +13,7 @@ function NameLines() {
 }
 
 function Hero() {
-  // The light copy of "Momin" only makes sense once the portrait is on screen;
-  // before that it would be light text on a light page.
+  // Fade the portrait in once it has loaded.
   const [ready, setReady] = useState(false)
   const imgRef = useRef(null)
   useEffect(() => {
@@ -48,7 +46,7 @@ function Hero() {
           <div className="hero-frame">
             <div
               className={`hero-stage ${ready ? 'is-ready' : ''}`}
-              style={{ '--portrait-src': `url(${portrait.src})`, '--portrait-cleanup': `url(${portrait.cleanup})` }}
+              style={{ '--portrait-cleanup': `url(${portrait.cleanup})` }}
             >
               <h1 className="hero-name"><NameLines /></h1>
               <div className="hero-portrait">
@@ -63,7 +61,6 @@ function Hero() {
                   decoding="async"
                 />
               </div>
-              <div className="hero-name hero-name-light" aria-hidden="true"><NameLines /></div>
             </div>
           </div>
         </div>
@@ -95,8 +92,8 @@ function Hero() {
             <h2 id="work-title">things I've made</h2>
             <p>Hardware, circuits and software. Each one opens into the full story: what I built, what broke and what changed.</p>
           </div>
-          <svg className="work-arrow" viewBox="0 0 28 96" aria-hidden="true">
-            <path d="M14 0v92M3 81l11 11 11-11" fill="none" stroke="currentColor" strokeWidth="2.5" />
+          <svg className="work-arrow" viewBox="0 0 20 64" aria-hidden="true">
+            <path d="M10 0v61M2 53l8 8 8-8" fill="none" stroke="currentColor" strokeWidth="2" />
           </svg>
         </div>
       </div>
