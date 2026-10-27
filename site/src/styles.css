@@ -103,10 +103,12 @@ a:hover .arrow-down { transform: translateY(3px); }
   --g: clamp(40px, 4.5vw, 72px);
   display: grid;
   grid-template-columns: minmax(0, 384px) minmax(0, 1fr);
-  grid-template-rows: auto 1fr;
+  /* Row 2 is only as tall as the work heading, so the step stays shallow; row 1 takes
+     the rest of the intro's height and the composition sits at its bottom. */
+  grid-template-rows: 1fr auto;
   column-gap: var(--g);
 }
-.hero-left { grid-column: 1; grid-row: 1; margin-right: calc(var(--g) / -2); border-bottom: 1px solid var(--text); }
+.hero-left { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; justify-content: flex-end; margin-right: calc(var(--g) / -2); border-bottom: 1px solid var(--text); }
 .hero-frame { container-type: inline-size; width: 440px; }
 
 
@@ -227,7 +229,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   grid-column: 1;
   grid-row: 2;
   margin-right: calc(var(--g) / -2);
-  padding: 24px calc(var(--g) / 2) 24px 0;
+  padding: 18px calc(var(--g) / 2) 18px 0;
   border-right: 1px solid var(--text);
 }
 /* A quiet lead-in to the projects, deliberately smaller than the hero type. */
