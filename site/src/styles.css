@@ -90,20 +90,22 @@ a:hover .arrow-down { transform: translateY(3px); }
 .header nav a:hover { color: var(--text); }
 
 /* Hero
-   Left: the introduction. Right: the name/portrait composition. */
-/* The first ink rule is the hero's own bottom border, so the portrait (cropped at the
-   bottom of its stage) ends exactly on it at every width. */
-.hero { padding: calc(var(--header) + 64px) 0 0; border-bottom: 1px solid var(--text); }
+   Wide screens: a two-column grid. Left, row 1: the name/portrait composition; its
+   wrapper's bottom border is the raised part of the ink rule, so the torso ends on it.
+   Left, row 2: the work heading, whose right border is the vertical drop. Right, both
+   rows: the intro, whose bottom border is the lower part of the rule. The borders meet
+   at the centre of the column gap (--g / 2), so the step reads as one line. */
+.hero { padding: calc(var(--header) + 48px) 0 0; }
 .hero-grid {
+  --g: clamp(48px, 6vw, 104px);
   display: grid;
-  /* The composition and the intro sit together as a centred pair, so wide screens get
-     even margins instead of a gap between them. */
-  grid-template-columns: minmax(0, 440px) minmax(0, 34rem);
-  justify-content: center;
-  column-gap: clamp(48px, 7vw, 112px);
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 34rem);
+  grid-template-rows: auto 1fr;
+  column-gap: var(--g);
 }
-.hero-frame { container-type: inline-size; width: 100%; }
+.hero-left { grid-column: 1; grid-row: 1; margin-right: calc(var(--g) / -2); border-bottom: 1px solid var(--text); }
+.hero-frame { container-type: inline-size; width: min(100%, 460px); }
+
 
 /* One scalable composition: type, portrait and mask are sized in cqw of the frame, so
    the overlap is identical at every width. Layers, back to front:
@@ -181,8 +183,14 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero-name-light { display: none; }
 }
 
-/* Intro sits beside the composition, vertically centred, clear of the rule below. */
-.hero-intro { align-self: center; padding-bottom: 40px; max-width: 34rem; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
+.hero-intro {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  margin-left: calc(var(--g) / -2);
+  padding: 8px 0 56px calc(var(--g) / 2);
+  border-bottom: 1px solid var(--text);
+}
+.hero-intro { font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
 .hero-hello {
   margin-bottom: 18px;
   font-size: clamp(48px, 4.8vw, 72px);
@@ -210,16 +218,27 @@ a:hover .arrow-down { transform: translateY(3px); }
 /* Work: a heading, then a two-column grid of projects. Every card has the same
    order (image, number + category, title, summary, status, link), so the grid stays
    scannable as more projects are added. */
-.work { padding: 88px 0 56px; }
-.work-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px 64px; flex-wrap: wrap; margin-bottom: 48px; }
-.work-head h2 {
+.work { padding: 56px 0 56px; }
+.work-lead {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-right: calc(var(--g) / -2);
+  padding: 40px calc(var(--g) / 2) 24px 0;
+  border-right: 1px solid var(--text);
+}
+.work-lead h2 {
   font-family: var(--display);
   font-size: clamp(40px, 4.6vw, 68px);
   line-height: 0.95;
   letter-spacing: -0.04em;
   font-weight: 700;
 }
-.work-head p { max-width: 40ch; font-size: 16px; line-height: 1.55; color: var(--muted); }
+.work-lead p { margin-top: 14px; max-width: 38ch; font-size: 16px; line-height: 1.55; color: var(--muted); }
+.work-arrow { flex: none; width: 28px; height: 96px; color: #e0461c; }
 .entries { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 72px clamp(28px, 3.5vw, 56px); }
 .entry { display: flex; flex-direction: column; }
 .entry-meta { display: flex; align-items: baseline; gap: 12px; margin-top: 18px; }
@@ -444,7 +463,9 @@ a:hover .arrow-down { transform: translateY(3px); }
 /* Tablet: keep the hero side by side, with equal columns */
 @media (max-width: 900px) {
   .hero { padding-top: calc(var(--header) + 48px); }
-  .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: 36px; }
+  .hero-grid { --g: 40px; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+  .work-lead { flex-direction: column; align-items: flex-start; }
+  .work-arrow { height: 64px; }
   .hero-hello { font-size: 48px; }
   .hero-intro { font-size: 16.5px; }
 
@@ -462,12 +483,14 @@ a:hover .arrow-down { transform: translateY(3px); }
 
 /* Small tablets and phones: hero stacks, composition first */
 @media (max-width: 700px) {
-  .hero-grid { grid-template-columns: 1fr; row-gap: 36px; }
-  .hero { padding-bottom: 72px; border-bottom: 0; }
-  .hero-frame { width: min(100%, 440px); justify-self: start; }
-  .hero-stage { border-bottom: 1px solid var(--text); }
-  .hero-intro { padding-bottom: 0; }
-  .work { padding-top: 64px; }
+  /* No room for the step: composition, intro, then the work heading, stacked. */
+  .hero-grid { grid-template-columns: 1fr; grid-template-rows: none; row-gap: 36px; }
+  .hero-left, .hero-intro, .work-lead { grid-column: 1; grid-row: auto; margin: 0; }
+  .hero-frame { width: min(100%, 440px); }
+  .hero-intro { padding: 0; border-bottom: 0; }
+  .work-lead { flex-direction: row; align-items: flex-end; padding: 40px 0 0; border-right: 0; }
+  .work-arrow { height: 56px; }
+  .work { padding-top: 40px; }
   .entries { grid-template-columns: 1fr; row-gap: 56px; }
   .entry-summary { font-size: 16px; }
   .hero-intro { max-width: 36rem; font-size: 17px; }
@@ -480,14 +503,13 @@ a:hover .arrow-down { transform: translateY(3px); }
   .header .narrow-only { display: inline; }
   .header nav { gap: 22px; }
   .header nav a { font-size: 14px; }
-  .hero { padding-top: calc(var(--header) + 28px); padding-bottom: 72px; }
+  .hero { padding-top: calc(var(--header) + 28px); }
   .hero-grid { row-gap: 28px; }
   .hero-frame { width: 84%; }
   .hero-hello { margin-bottom: 14px; }
   .hero-intro { font-size: 17px; }
   .hero-facts > div { grid-template-columns: 72px 1fr; gap: 12px; }
 
-  .work-head { margin-bottom: 32px; }
 
   .journey { padding: 88px 0; }
   .contact { padding-top: 72px; }

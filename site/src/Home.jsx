@@ -40,26 +40,31 @@ function Hero() {
         </filter>
       </svg>
 
+      {/* Wide screens: the ink rule steps. It runs under the portrait on the left, drops
+          down at the column gap, and continues under the intro on the right. The work
+          heading sits in the space beneath the raised part. */}
       <div className="hero-grid">
-        <div className="hero-frame">
-          <div
-            className={`hero-stage ${ready ? 'is-ready' : ''}`}
-            style={{ '--portrait-src': `url(${portrait.src})`, '--portrait-cleanup': `url(${portrait.cleanup})` }}
-          >
-            <h1 className="hero-name"><NameLines /></h1>
-            <div className="hero-portrait">
-              <img
-                ref={imgRef}
-                onLoad={() => setReady(true)}
-                src={portrait.src}
-                width={portrait.width}
-                height={portrait.height}
-                alt="Ahson Momin, mid-explanation, in a dark hoodie"
-                fetchpriority="high"
-                decoding="async"
-              />
+        <div className="hero-left">
+          <div className="hero-frame">
+            <div
+              className={`hero-stage ${ready ? 'is-ready' : ''}`}
+              style={{ '--portrait-src': `url(${portrait.src})`, '--portrait-cleanup': `url(${portrait.cleanup})` }}
+            >
+              <h1 className="hero-name"><NameLines /></h1>
+              <div className="hero-portrait">
+                <img
+                  ref={imgRef}
+                  onLoad={() => setReady(true)}
+                  src={portrait.src}
+                  width={portrait.width}
+                  height={portrait.height}
+                  alt="Ahson Momin, mid-explanation, in a dark hoodie"
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              </div>
+              <div className="hero-name hero-name-light" aria-hidden="true"><NameLines /></div>
             </div>
-            <div className="hero-name hero-name-light" aria-hidden="true"><NameLines /></div>
           </div>
         </div>
 
@@ -83,6 +88,16 @@ function Hero() {
             <li><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a></li>
             <li><a href={links.instagram} target="_blank" rel="noreferrer">Instagram <Arrow /></a></li>
           </ul>
+        </div>
+
+        <div className="work-lead" id="work">
+          <div>
+            <h2 id="work-title">things I've made</h2>
+            <p>Hardware, circuits and software. Each one opens into the full story: what I built, what broke and what changed.</p>
+          </div>
+          <svg className="work-arrow" viewBox="0 0 28 96" aria-hidden="true">
+            <path d="M14 0v92M3 81l11 11 11-11" fill="none" stroke="currentColor" strokeWidth="2.5" />
+          </svg>
         </div>
       </div>
     </section>
@@ -157,11 +172,7 @@ function Entry({ project, index }) {
 
 function Work() {
   return (
-    <section className="work shell" id="work" aria-labelledby="work-title">
-      <header className="work-head">
-        <h2 id="work-title">things I've made</h2>
-        <p>Hardware, circuits and software. Each one opens into the full story: what I built, what broke and what changed.</p>
-      </header>
+    <section className="work shell" aria-labelledby="work-title">
       <ol className="entries">
         {projects.map((p, i) => <Entry key={p.slug} project={p} index={i} />)}
       </ol>
