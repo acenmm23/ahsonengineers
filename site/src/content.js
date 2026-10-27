@@ -1,5 +1,6 @@
 // Links, media and the project list used across the site. Photos live in
 // site/public/media at two widths; originals are kept in media-originals/.
+import cleanupMask from './assets/portrait-cleanup-mask.png'
 
 export const links = {
   email: 'ahsonmomin@gmail.com',
@@ -31,11 +32,12 @@ export const media = {
   labOverhead: photo('lab-overhead', [1206, 700], 1206, 1706),
 }
 
-// Hero cutout, used as supplied. `cleanup` hides a few leftover background pixels and
-// softens two flat edges of the cutout without editing the photo itself.
+// Hero cutout, used as supplied. `cleanup` hides leftover background around the cutout
+// without editing the photo itself. It is imported (not in public/) so the build gives it
+// a content-hashed filename: every change gets a new URL and browsers can't show a stale one.
 export const portrait = {
   src: '/media/portrait-cutout.webp',
-  cleanup: '/media/portrait-cleanup-mask.png',
+  cleanup: cleanupMask,
   width: 1117,
   height: 1425,
 }

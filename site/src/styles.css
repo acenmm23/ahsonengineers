@@ -82,7 +82,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 }
 .header-inner { height: var(--header); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
 .brand { display: flex; align-items: center; justify-content: center; padding: 10px 4px; }
-.brand-mark { width: 48px; height: 31px; flex: none; }
+.brand-mark { width: 40px; height: 23px; flex: none; }
 .header nav { display: flex; gap: 28px; }
 .header-social { justify-content: flex-end; }
 .header .narrow-only { display: none; }
@@ -96,11 +96,14 @@ a:hover .arrow-down { transform: translateY(3px); }
 .hero { padding: calc(var(--header) + 64px) 0 0; border-bottom: 1px solid var(--text); }
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  column-gap: clamp(40px, 6vw, 104px);
+  /* The composition and the intro sit together as a centred pair, so wide screens get
+     even margins instead of a gap between them. */
+  grid-template-columns: minmax(0, 440px) minmax(0, 34rem);
+  justify-content: center;
+  column-gap: clamp(48px, 7vw, 112px);
   align-items: end;
 }
-.hero-frame { container-type: inline-size; width: min(100%, 600px); justify-self: start; }
+.hero-frame { container-type: inline-size; width: 100%; }
 
 /* One scalable composition: type, portrait and mask are sized in cqw of the frame, so
    the overlap is identical at every width. Layers, back to front:
