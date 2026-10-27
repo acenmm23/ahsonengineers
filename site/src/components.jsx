@@ -3,9 +3,19 @@ import { links } from './content.js'
 const NAV = [
   { href: '/#work', label: 'Work' },
   { href: '/#journey', label: 'Journey' },
-  { href: '/#about', label: 'About' },
   { href: '/#contact', label: 'Contact' },
 ]
+
+// Little Ledger has no screenshots yet, so its visual is the product's own wordmark
+// and colors (from littleledger.app) rather than an invented interface.
+export function LittleLedgerPanel({ className = '' }) {
+  return (
+    <div className={`ll-panel ${className}`} role="img" aria-label="Little Ledger wordmark">
+      <span className="ll-wordmark">little ledger</span>
+      <span className="ll-tagline">Attendance · Billing · Records</span>
+    </div>
+  )
+}
 
 // Traced from the AM monogram PNG (media-originals/monogram.png). Small sizes need a
 // heavier stroke to stay legible.
@@ -72,7 +82,7 @@ export function Video({ clip }) {
 }
 
 export function Arrow({ dir = 'out' }) {
-  const glyph = { out: '↗', right: '→', left: '←' }[dir]
+  const glyph = { out: '↗', right: '→', left: '←', down: '↓' }[dir]
   return <span className={`arrow arrow-${dir}`} aria-hidden="true">{glyph}</span>
 }
 

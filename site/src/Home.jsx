@@ -1,8 +1,9 @@
+import { useEffect, useRef, useState } from 'react'
 import { links, media, portrait, projects } from './content.js'
-import { Header, Contact, Photo, Arrow, Facts } from './components.jsx'
+import { Header, Contact, Photo, Arrow, LittleLedgerPanel } from './components.jsx'
 
 // The name is set twice: the real <h1>, and an aria-hidden light copy masked to the
-// hoodie so "Momin" turns light exactly where it crosses dark clothing.
+// portrait's silhouette so "Momin" turns light exactly where it crosses it.
 function NameLines() {
   return (
     <>
@@ -13,56 +14,84 @@ function NameLines() {
 }
 
 function Hero() {
+  // The light copy of "Momin" only makes sense once the portrait is on screen;
+  // before that it would be light text on a light page.
+  const [ready, setReady] = useState(false)
+  const imgRef = useRef(null)
+  useEffect(() => {
+    if (imgRef.current?.complete) setReady(true)
+  }, [])
+
   return (
     <section className="hero shell" id="top">
-      <div className="hero-frame">
-        <div
-          className="hero-stage"
-          style={{ '--portrait-src': `url(${portrait.src})`, '--portrait-cleanup': `url(${portrait.cleanup})` }}
-        >
-          <h1 className="hero-name"><NameLines /></h1>
-          <img
-            className="hero-portrait"
-            src={portrait.src}
-            width={portrait.width}
-            height={portrait.height}
-            alt="Ahson Momin, mid-explanation, in a dark hoodie"
-            fetchpriority="high"
-            decoding="async"
-          />
-          <div className="hero-name hero-name-light" aria-hidden="true"><NameLines /></div>
-        </div>
-        <div className="hero-aside">
-          <p className="hero-kicker">Electrical Engineering<br />UC Santa Cruz</p>
-          <div>
-            <p className="hero-intro">
-              I build hardware and document how it gets made: the prototypes, the failures and the
-              fixes.
-            </p>
-            <div className="hero-links">
-              <a href="#work">See the work</a>
-              <a href={links.instagram} target="_blank" rel="noreferrer">Follow the build <Arrow /></a>
+      <div className="hero-grid">
+        <div className="hero-frame">
+          <div
+            className={`hero-stage ${ready ? 'is-ready' : ''}`}
+            style={{ '--portrait-src': `url(${portrait.src})`, '--portrait-cleanup': `url(${portrait.cleanup})` }}
+          >
+            <h1 className="hero-name"><NameLines /></h1>
+            <div className="hero-portrait">
+              <img
+                ref={imgRef}
+                onLoad={() => setReady(true)}
+                src={portrait.src}
+                width={portrait.width}
+                height={portrait.height}
+                alt="Ahson Momin, mid-explanation, in a dark hoodie"
+                fetchpriority="high"
+                decoding="async"
+              />
             </div>
+            <div className="hero-name hero-name-light" aria-hidden="true"><NameLines /></div>
           </div>
+        </div>
+
+        <div className="hero-intro" id="about">
+          <p className="hero-hello">Hey, I'm Ahson.</p>
+          <p>
+            I'm an electrical engineering student at UC Santa Cruz, and I like turning ideas into
+            things that actually work. A lot of that means building an imperfect first version,
+            figuring out what went wrong, and working through the next one.
+          </p>
+          <p>
+            Right now I'm developing BetterKey, building Little Ledger for small daycare providers,
+            and documenting what I learn along the way.
+          </p>
+          <dl className="hero-facts">
+            <div><dt>Studying</dt><dd>B.S. Electrical Engineering, UC Santa Cruz, expected 2027</dd></div>
+            <div><dt>Into</dt><dd>Electronics, embedded systems, hardware, product design</dd></div>
+          </dl>
+          <ul className="hero-links text-links">
+            <li><a href="#work">Explore my work <Arrow dir="down" /></a></li>
+            <li><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a></li>
+            <li><a href={links.instagram} target="_blank" rel="noreferrer">Instagram <Arrow /></a></li>
+          </ul>
         </div>
       </div>
     </section>
   )
 }
 
-function Preview({ index, href, title, kind, image, status, children }) {
+function Entry({ project, index }) {
+  const p = project
   return (
-    <li className="preview">
-      <a className="preview-media" href={href} tabIndex={-1} aria-hidden="true">
-        <Photo image={image} alt="" sizes="(max-width: 960px) 100vw, 760px" />
+    <li className="entry">
+      <p className="entry-meta">
+        <span className="mono entry-no">{String(index + 1).padStart(2, '0')}</span>
+        <span className="entry-category">{p.category}</span>
+      </p>
+      <h3 className="entry-title"><a href={p.href}>{p.title}</a></h3>
+      <a className="entry-media" href={p.href} tabIndex={-1} aria-hidden="true">
+        {p.image
+          ? <Photo image={p.image} alt="" sizes="(max-width: 900px) 100vw, 760px" />
+          : <LittleLedgerPanel />}
       </a>
-      <div className="preview-text">
-        <span className="mono preview-index">{index}</span>
-        <h3><a href={href}>{title}</a></h3>
-        <p className="preview-kind">{kind}</p>
-        <p className="preview-desc">{children}</p>
-        <p className="preview-status"><span>Status</span>{status}</p>
-        <a className="explore" href={href} aria-label={`Explore project: ${title}`}>
+      <div className="entry-body">
+        <p className="entry-disciplines">{p.disciplines.join(' · ')}</p>
+        <p className="entry-summary">{p.summary}</p>
+        <p className="entry-status"><span>Status</span>{p.status}</p>
+        <a className="explore" href={p.href} aria-label={`Explore project: ${p.title}`}>
           Explore project <Arrow dir="right" />
         </a>
       </div>
@@ -74,31 +103,8 @@ function Work() {
   return (
     <section className="work shell" id="work" aria-labelledby="work-title">
       <h2 id="work-title" className="section-title">Selected work</h2>
-      <ol className="previews">
-        <Preview
-          index="01"
-          href={projects.betterkey.href}
-          title={projects.betterkey.title}
-          kind="Mechanical design and hardware development"
-          image={media.betterkeyPrints}
-          status="In development. The compact enclosure is still being printed and tested."
-        >
-          A retrofit that operates the deadbolt you already have with a dedicated button, the way
-          you unlock a car. The idea is simple; fitting a motor, batteries and electronics onto a
-          door has taken a long run of prototypes, from a large first version to a compact
-          enclosure.
-        </Preview>
-        <Preview
-          index="02"
-          href={projects.ece118.href}
-          title={projects.ece118.title}
-          kind="ECE 118, UC Santa Cruz · Analog electronics"
-          image={media.perfboard}
-          status="Built. Technical write-up in progress."
-        >
-          An analog circuit for detecting the signal on a track wire, taken off the breadboard and
-          soldered onto perfboard by hand.
-        </Preview>
+      <ol className="entries">
+        {projects.map((p, i) => <Entry key={p.slug} project={p} index={i} />)}
       </ol>
     </section>
   )
@@ -111,7 +117,7 @@ function Journey() {
         <div className="journey-portrait">
           <Photo
             image={media.labOverhead}
-            sizes="(max-width: 960px) 100vw, 50vw"
+            sizes="(max-width: 900px) 100vw, 50vw"
             alt="Ahson sitting at a workbench in the Flux lab, talking to the camera, surrounded by soldering equipment, an oscilloscope, resin printers and two laptops"
           />
         </div>
@@ -123,9 +129,9 @@ function Journey() {
           </p>
           <p>
             A finished product rarely shows the failed prints, the redesigns or the problem nobody
-            saw coming. That is most of the work, so that is what I share, as it happens. Explaining
-            a build to other people means I have to understand it, and that has become part of how I
-            learn.
+            saw coming. That is most of the work, so that is what I share as @ahsonmade, as it
+            happens. Explaining a build to other people means I have to understand it, and that has
+            become part of how I learn.
           </p>
           <p>
             I also have an ongoing collaboration with <a href={links.flux} target="_blank" rel="noreferrer">Flux</a>,
@@ -133,29 +139,9 @@ function Journey() {
             This photo was taken in their lab.
           </p>
           <a className="cta" href={links.instagram} target="_blank" rel="noreferrer">
-            Follow the build <span className="cta-handle">@ahsonmade</span> <Arrow />
+            Follow the build on Instagram <Arrow />
           </a>
         </div>
-      </div>
-    </section>
-  )
-}
-
-function About() {
-  return (
-    <section className="about shell" id="about" aria-labelledby="about-title">
-      <h2 id="about-title" className="section-title">About</h2>
-      <div className="about-body">
-        <p>
-          I am an electrical engineering student at UC Santa Cruz. I am most interested in
-          electronics, embedded systems, hardware development, mechanical integration and product
-          design, especially where a circuit has to become a physical thing someone can use.
-        </p>
-        <Facts items={[
-          ['Degree', 'B.S. Electrical Engineering'],
-          ['University', 'University of California, Santa Cruz'],
-          ['Graduation', 'Expected 2027'],
-        ]} />
       </div>
     </section>
   )
@@ -170,7 +156,6 @@ export default function Home() {
         <Hero />
         <Work />
         <Journey />
-        <About />
         <Contact />
       </main>
     </>
