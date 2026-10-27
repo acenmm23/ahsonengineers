@@ -2,8 +2,9 @@
 
 Portfolio site for Ahson Momin. React + Vite.
 
-- Source: `site/` (content lives in `site/src/projects.js`)
-- Built output: repo root (`index.html`, `assets/`, `CNAME`, `favicon.svg`), served by GitHub Pages from `main`
+- Source: `site/` (links and media list in `site/src/content.js`, copy in `site/src/App.jsx`)
+- Built output: repo root (`index.html`, `assets/`, `media/`, `CNAME`, `favicon.svg`), served by GitHub Pages from `main`
+- Photos and video: `site/public/media/` (two widths per photo); untouched originals in `media-originals/`
 
 ```bash
 npm install

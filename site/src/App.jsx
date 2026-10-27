@@ -1,311 +1,382 @@
-import { useEffect, useState } from 'react'
-import { featured, projects, capabilities, contact } from './projects.js'
+import { links, media, betterkeyVideos } from './content.js'
 
-const SHEETS = [
-  { id: 'top', label: 'Index' },
+const NAV = [
   { id: 'work', label: 'Work' },
-  { id: 'approach', label: 'Approach' },
+  { id: 'journey', label: 'Journey' },
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
 ]
 
-const pad = (n) => String(n).padStart(2, '0')
-
-function useReveal() {
-  useEffect(() => {
-    const items = document.querySelectorAll('[data-reveal]')
-    if (!('IntersectionObserver' in window)) {
-      items.forEach((el) => el.classList.add('is-in'))
-      return undefined
-    }
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-in')
-          io.unobserve(e.target)
-        }
-      }),
-      { rootMargin: '0px 0px -8% 0px' }
-    )
-    items.forEach((el) => {
-      if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in')
-      else io.observe(el)
-    })
-    return () => io.disconnect()
-  }, [])
-}
-
-function useActiveSheet() {
-  const [active, setActive] = useState(0)
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) setActive(SHEETS.findIndex((s) => s.id === e.target.id))
-      }),
-      { rootMargin: '-45% 0px -50% 0px' }
-    )
-    SHEETS.forEach((s) => {
-      const el = document.getElementById(s.id)
-      if (el) io.observe(el)
-    })
-    // The last section is short, so it never reaches the middle band on tall screens.
-    const atBottom = () => {
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) setActive(SHEETS.length - 1)
-    }
-    window.addEventListener('scroll', atBottom, { passive: true })
-    return () => {
-      io.disconnect()
-      window.removeEventListener('scroll', atBottom)
-    }
-  }, [])
-  return active
-}
-
-function Mark({ className }) {
+// Traced from the AM monogram PNG (media-originals/monogram.png). Small sizes need a
+// heavier stroke to stay legible.
+function Monogram({ className, weight = 14 }) {
   return (
-    <svg className={className} viewBox="0 0 100 120" aria-hidden="true">
-      <g fill="currentColor">
-        <path d="M0 63 50 0l50 63H73L50 31 27 63Z" />
-        <rect y="67" width="100" height="12" />
-        <rect y="83" width="15" height="36" />
-        <rect x="42.5" y="83" width="15" height="26" />
-        <rect x="85" y="83" width="15" height="36" />
+    <svg className={className} viewBox="485 228 725 422" aria-hidden="true">
+      <g fill="none" stroke="currentColor" strokeWidth={weight} strokeLinejoin="miter" strokeMiterlimit="10">
+        <path d="M490 670 800 250l197 201 198-201v410" />
+        <path d="M803 252v410" />
+        <path d="M645 467h158" />
       </g>
     </svg>
   )
 }
 
-function Header({ active }) {
-  const sheet = SHEETS[active] ?? SHEETS[0]
+function Photo({ image, alt, sizes, eager, className }) {
+  return (
+    <img
+      className={className}
+      src={image.src}
+      srcSet={image.srcSet}
+      sizes={sizes}
+      width={image.width}
+      height={image.height}
+      alt={alt}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+    />
+  )
+}
+
+function Figure({ image, alt, sizes, label, caption, className = '', eager }) {
+  return (
+    <figure className={`figure ${className}`}>
+      <Photo image={image} alt={alt} sizes={sizes} eager={eager} />
+      <figcaption>
+        {label && <span className="mono">{label}</span>}
+        {caption}
+      </figcaption>
+    </figure>
+  )
+}
+
+function Video({ clip }) {
+  return (
+    <figure className="figure figure-video">
+      <video
+        controls
+        playsInline
+        preload="none"
+        poster={clip.poster}
+        width={clip.width}
+        height={clip.height}
+        aria-label={clip.caption}
+      >
+        <source src={clip.src} type="video/mp4" />
+      </video>
+      <figcaption>
+        <span className="mono">{clip.label}</span>
+        {clip.caption}
+      </figcaption>
+    </figure>
+  )
+}
+
+function Arrow() {
+  return <span className="arrow" aria-hidden="true">&#8599;</span>
+}
+
+function Header() {
   return (
     <header className="header">
       <div className="shell header-inner">
-        <a href="#top" className="header-brand" aria-label="Ahson Momin, back to top">
-          <Mark className="header-mark" />
+        <a href="#top" className="brand" aria-label="Ahson Momin, back to top">
+          <Monogram className="brand-mark" weight={34} />
           <span>Ahson Momin</span>
         </a>
-        <nav className="header-nav" aria-label="Sections">
-          {SHEETS.slice(1).map((s, i) => (
-            <a key={s.id} href={`#${s.id}`} className={active === i + 1 ? 'is-active' : undefined}>{s.label}</a>
-          ))}
+        <nav aria-label="Sections">
+          {NAV.map((n) => <a key={n.id} href={`#${n.id}`}>{n.label}</a>)}
         </nav>
-        <div className="header-sheet mono" aria-hidden="true">
-          <span>Sheet</span>
-          <strong>{pad(active + 1)}</strong>
-          <span>/ {pad(SHEETS.length)}</span>
-          <em>{sheet.label}</em>
-        </div>
       </div>
     </header>
-  )
-}
-
-function MonogramDrawing() {
-  return (
-    <svg className="drawing" viewBox="0 0 200 214" role="img" aria-label="Line drawing of the AM monogram with dimensions">
-      <defs>
-        <pattern id="hatch" width="3.2" height="3.2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <line x1="0" y1="0" x2="0" y2="3.2" className="hatch-line" />
-        </pattern>
-      </defs>
-
-      <line className="d-center" x1="100" y1="26" x2="100" y2="170" />
-
-      <g transform="translate(50 40)">
-        <path className="d-solid" d="M0 63 50 0l50 63H73L50 31 27 63Z" />
-        <path className="d-hatch" d="M0 67h100v12H0ZM0 83h15v36H0ZM42.5 83h15v26h-15ZM85 83h15v36H85Z" />
-        <path className="d-stroke s1" pathLength="1" d="M0 63 50 0l50 63H73L50 31 27 63Z" />
-        <path className="d-stroke s2" pathLength="1" d="M0 67h100v12H0Z" />
-        <path className="d-stroke s3" pathLength="1" d="M0 83h15v36H0Z" />
-        <path className="d-stroke s4" pathLength="1" d="M42.5 83h15v26h-15Z" />
-        <path className="d-stroke s5" pathLength="1" d="M85 83h15v36H85Z" />
-      </g>
-
-      <g className="d-dims">
-        <path d="M50 164v18M150 164v18M50 178h100" />
-        <path d="M50 178l5-2v4ZM150 178l-5-2v4Z" className="d-arrow" />
-        <text x="100" y="175" textAnchor="middle">100.0</text>
-
-        <path d="M44 40H22M44 159H22M28 40v119" />
-        <path d="M28 40l-2 5h4ZM28 159l-2-5h4Z" className="d-arrow" />
-        <text x="24" y="100" textAnchor="middle" transform="rotate(-90 24 100)">119.0</text>
-
-        <path d="M89 54a14 14 0 0 0 22 0" />
-        <path d="M111 54 156 18h30" />
-        <text x="158" y="15">76.9°</text>
-      </g>
-
-      <g className="d-title">
-        <path d="M118 194h82M118 194v20M164 194v20" />
-        <text x="121" y="202">AM-00</text>
-        <text x="121" y="210">MONOGRAM</text>
-        <text x="167" y="202">SCALE 1:1</text>
-        <text x="167" y="210">REV C</text>
-      </g>
-    </svg>
   )
 }
 
 function Hero() {
   return (
     <section className="hero shell" id="top">
-      <div className="hero-meta mono" data-reveal>
-        <span>Electrical engineering / Hardware / Product</span>
-        <span>Santa Cruz, California</span>
+      <p className="hero-kicker">Electrical Engineering, UC Santa Cruz</p>
+      <div className="hero-main">
+        <h1>Ahson<br />Momin</h1>
+        <Monogram className="hero-mark" />
       </div>
-
-      <div className="hero-grid">
-        <div className="hero-copy">
-          <h1 className="hero-name" data-reveal>Ahson<br />Momin</h1>
-          <p className="hero-statement" data-reveal>
-            I design and build hardware products end to end. Circuits, enclosures, CAD, and the
-            decisions that hold them together.
-          </p>
-        </div>
-        <div className="hero-figure" data-reveal>
-          <MonogramDrawing />
+      <div className="hero-foot">
+        <p className="hero-intro">
+          I build hardware and document how it gets made: the prototypes, the failures and the
+          fixes. Right now that means BetterKey, a retrofit that operates the deadbolt you already
+          have with a dedicated button.
+        </p>
+        <div className="hero-links">
+          <a href="#work">See the work</a>
+          <a href={links.instagram} target="_blank" rel="noreferrer">Follow the build <Arrow /></a>
         </div>
       </div>
-
-      <dl className="hero-spec" data-reveal>
-        <div><dt className="mono">Currently</dt><dd>Building <a href="#work">theBetterKey</a></dd></div>
-        <div><dt className="mono">Discipline</dt><dd>Electrical engineering</dd></div>
-        <div><dt className="mono">Works in</dt><dd>Electronics, CAD, product</dd></div>
-        <div><dt className="mono">Contact</dt><dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd></div>
-      </dl>
-
-      <div className="ruler" aria-hidden="true" />
     </section>
   )
 }
 
-function SectionHead({ index, label, title, children }) {
+function ProjectHead({ index, kicker, title, lede, children }) {
   return (
-    <div className="section-head" data-reveal>
-      <span className="mono section-index">{pad(index)} &mdash; {label}</span>
-      <h2>{title}</h2>
-      {children && <p>{children}</p>}
-    </div>
+    <header className="project-head">
+      <div className="project-id">
+        <span className="mono">{index}</span>
+        <span>{kicker}</span>
+      </div>
+      <div className="project-title">
+        <h3>{title}</h3>
+        {lede && <p className="lede">{lede}</p>}
+        {children}
+      </div>
+    </header>
   )
 }
 
-function Featured() {
-  const f = featured
+function Facts({ items }) {
   return (
-    <article className="featured" data-reveal>
-      <div className="featured-plate">
-        <span className="corner tl" /><span className="corner tr" /><span className="corner bl" /><span className="corner br" />
-        <span className="mono plate-label">{f.no} / The key</span>
-        <img src={f.image} alt={f.imageAlt} />
+    <dl className="facts">
+      {items.map(([k, v]) => (
+        <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+      ))}
+    </dl>
+  )
+}
+
+function Chapter({ stage, title, children, media: mediaNode, wide }) {
+  return (
+    <section className={`chapter ${wide ? 'chapter-wide' : ''}`}>
+      <div className="chapter-stage mono">{stage}</div>
+      <div className="chapter-body">
+        <h4>{title}</h4>
+        <div className="chapter-text">{children}</div>
       </div>
+      {mediaNode && <div className="chapter-media">{mediaNode}</div>}
+    </section>
+  )
+}
 
-      <div className="featured-body">
-        <div className="featured-tags mono">
-          <span>{f.no}</span>
-          <span className="status"><i />{f.status}</span>
-        </div>
-        <h3>{f.name}</h3>
-        <p className="featured-line">{f.line}</p>
-        <p className="featured-summary">{f.summary}</p>
+function BetterKey() {
+  const nowClips = betterkeyVideos.filter((v) => v.chapter === 'now')
+  const v1Clips = betterkeyVideos.filter((v) => v.chapter === 'v1')
 
-        <dl className="spec">
-          {f.spec.map(([k, v]) => (
-            <div key={k}><dt className="mono">{k}</dt><dd>{v}</dd></div>
-          ))}
-          <div><dt className="mono">Role</dt><dd>{f.role}</dd></div>
-        </dl>
+  return (
+    <article className="project" id="betterkey" aria-labelledby="betterkey-title">
+      <ProjectHead
+        index="01"
+        kicker="Mechanical design and product development"
+        title={<span id="betterkey-title">BetterKey</span>}
+        lede="Building the simplest possible solution is often a complicated engineering process."
+      >
+        <p className="body">
+          BetterKey is a retrofit for the deadbolt you already have. Press a dedicated button, the
+          way you would unlock a car, and a motor turns the lock. The idea is simple. Getting a
+          motor, batteries and electronics to fit neatly on the back of a door has taken
+          electronics work, CAD, 3D printing and a lot of prototypes that did not work the first
+          time.
+        </p>
+        <Facts items={[
+          ['Work', 'Electronics, CAD, 3D printing, motors, prototyping'],
+          ['Status', 'In development. Not a finished product.'],
+          ['More', <a href={links.betterkey} target="_blank" rel="noreferrer">thebetterkey.com <Arrow /></a>],
+        ]} />
+      </ProjectHead>
 
-        <a className="text-link" href={f.link.href} target="_blank" rel="noreferrer">
-          {f.link.label} <span aria-hidden="true">&#8599;</span>
-        </a>
-      </div>
+      <p className="story-note mono">Newest first, working back to the first prototype</p>
+
+      <Chapter
+        stage="Now"
+        title="Packing everything into one enclosure"
+        media={
+          <>
+            {nowClips.map((c) => <Video key={c.src} clip={c} />)}
+            <Figure
+              image={media.betterkeyCad}
+              sizes="(max-width: 960px) 100vw, 880px"
+              alt="CAD model of the V4A3 BetterKey enclosure in Fusion 360, with two cylindrical batteries side by side under a sliding lid"
+              label="CAD model · V4A3"
+              caption="The current design in Fusion 360, with the sliding battery lid partly open."
+            />
+          </>
+        }
+      >
+        <p>
+          The latest version is designed around packaging: two CR123A cells under a sliding lid, a
+          removable housing for the motor and a cover for the internal electronics. What you see
+          here is a CAD model. It is still being printed, tested and revised, so it is a design in
+          progress rather than a proven result.
+        </p>
+      </Chapter>
+
+      <Chapter
+        stage="V1 → V4"
+        title="Same job, much smaller"
+        wide
+        media={
+          <Figure
+            className="figure-feature"
+            image={media.betterkeyV1V4}
+            sizes="(max-width: 960px) 100vw, 1320px"
+            alt="A small white BetterKey enclosure labeled V4 next to the much larger green V1 enclosure, side by side on a notebook"
+            label="Printed prototypes · V4 and V1"
+            caption="V4 (white) beside V1 (green), both printed. The difference in size is the story of every version in between."
+          />
+        }
+      >
+        <p>
+          V1 was large on purpose. It only had to prove that a button press could turn a real
+          deadbolt, so I gave the motor, batteries and wiring as much room as they needed and
+          built it quickly. Once that worked, the problem changed. Every version after it has been
+          about fitting the same parts, and the interface to the thumbturn, into less space.
+        </p>
+      </Chapter>
+
+      <Chapter
+        stage="In between"
+        title="What the prints showed that CAD did not"
+        media={
+          <Figure
+            image={media.betterkeyPrints}
+            sizes="(max-width: 960px) 100vw, 880px"
+            alt="Several 3D-printed BetterKey enclosures in navy, orange, green and white on a desk with a gearmotor, battery pack and digital calipers"
+            label="Printed prototypes"
+            caption="Enclosures from several iterations, with a gearmotor, a battery pack and calipers on the desk."
+          />
+        }
+      >
+        <p>
+          A design can look right on screen and still fail in your hand. Printing each version
+          exposed problems I could not see in CAD, in how parts fit, how they go together and how
+          everything packs around the lock. The pattern has been the same each time: build it,
+          find what fails, fix it, print the next one.
+        </p>
+      </Chapter>
+
+      <Chapter
+        stage="V1"
+        title="Proving the idea first"
+        media={v1Clips.length > 0 && v1Clips.map((c) => <Video key={c.src} clip={c} />)}
+      >
+        <p>
+          The first prototype was about speed, not size. It was mounted on a wooden test rig with
+          the electronics still on the bench, which was enough to start learning what the real
+          design would need.
+        </p>
+      </Chapter>
     </article>
   )
 }
 
-function ProjectRow({ p, open, onToggle }) {
-  const panelId = `panel-${p.no}`
+function Ece118() {
   return (
-    <li className={`row ${open ? 'is-open' : ''}`}>
-      <button className="row-head" onClick={onToggle} aria-expanded={open} aria-controls={panelId}>
-        <span className="mono row-no">{p.no}</span>
-        <span className="row-name">{p.name}</span>
-        <span className="row-discipline">{p.discipline}</span>
-        <span className="mono row-tools">{p.tools}</span>
-        <span className="row-toggle" aria-hidden="true" />
-      </button>
-      <div className="row-panel" id={panelId} role="region" aria-label={p.name}>
-        <div className="row-panel-inner">
-          <p className="row-summary">{p.summary}</p>
-          <ol className="row-points">
-            {p.points.map((pt) => <li key={pt}>{pt}</li>)}
+    <article className="project" id="ece118" aria-labelledby="ece118-title">
+      <ProjectHead
+        index="02"
+        kicker="ECE 118, UC Santa Cruz · Analog signal detection"
+        title={<span id="ece118-title">From Breadboard to Perfboard</span>}
+        lede="A hand-soldered analog circuit for detecting the signal on a track wire."
+      />
+
+      <Figure
+        className="figure-board"
+        image={media.perfboard}
+        sizes="(max-width: 960px) 100vw, 1258px"
+        alt="Hand-soldered perfboard with four DIP integrated circuits, resistors, ceramic capacitors, a blue screw terminal and a green LED"
+        label="Hand-soldered perfboard"
+        caption="Four DIP ICs and their supporting parts, with power coming in through the screw terminal at top right and an LED indicator at left."
+      />
+
+      <div className="board-notes">
+        <section>
+          <h4>Purpose</h4>
+          <p>
+            Part of the ECE 118 project is detecting an electrical signal carried on a track wire.
+            This board is my circuit for that job. It is designed to pick up the signal with a
+            sensor, condition it, decide whether it is present and show the result on an indicator.
+          </p>
+        </section>
+        <section>
+          <h4>What I built</h4>
+          <p>
+            I took the circuit off the breadboard and soldered it onto perfboard by hand. That
+            meant planning where each stage sits, how power reaches it and how to keep the wiring
+            readable enough to debug once everything is fixed in place.
+          </p>
+        </section>
+        <section>
+          <h4>Intended signal path</h4>
+          <ol className="signal-path">
+            <li>Sensor</li>
+            <li>Signal conditioning</li>
+            <li>Detection</li>
+            <li>Output indication</li>
           </ol>
-        </div>
+        </section>
+        <section>
+          <h4>Concepts I am working through</h4>
+          <p>Resonant sensing, operational amplifier stages, peak detection and comparator hysteresis.</p>
+        </section>
       </div>
-    </li>
+
+      <p className="in-progress">
+        <span className="mono">In progress</span>
+        I am still reviewing the theory behind each stage. The schematic, a signal-path diagram,
+        calculations and test measurements will be added here once I have verified them.
+      </p>
+    </article>
   )
 }
 
 function Work() {
-  const [open, setOpen] = useState(null)
   return (
-    <section className="section shell" id="work">
-      <SectionHead index={1} label="Work" title="Selected work">
-        One product I am building now, and the projects that taught me how to build it.
-      </SectionHead>
-
-      <Featured />
-
-      <div className="register" data-reveal>
-        <div className="register-head mono" aria-hidden="true">
-          <span>No.</span><span>Project</span><span>Discipline</span><span>Tools</span><span />
-        </div>
-        <ul>
-          {projects.map((p) => (
-            <ProjectRow key={p.no} p={p} open={open === p.no} onToggle={() => setOpen(open === p.no ? null : p.no)} />
-          ))}
-          <li className="row row-pending">
-            <div className="row-head">
-              <span className="mono row-no">AM-{pad(projects.length + 2)}</span>
-              <span className="row-name">More being documented</span>
-              <span className="row-discipline">Write-ups in progress</span>
-            </div>
-          </li>
-        </ul>
-      </div>
+    <section className="work shell" id="work" aria-labelledby="work-title">
+      <h2 id="work-title" className="section-title">Selected work</h2>
+      <BetterKey />
+      <Ece118 />
     </section>
   )
 }
 
-const principles = [
-  {
-    title: 'Start from the constraint.',
-    body: 'The ADU had to pass city code. The lock had to keep the key people already trust. I like problems where the rules are real, and I design inside them instead of around them.',
-  },
-  {
-    title: 'Build it before polishing it.',
-    body: 'A printed, wired, slightly broken prototype teaches more than a perfect render. I would rather show the messy version that works than the clean one that does not exist yet.',
-  },
-  {
-    title: 'Cut what does not earn its place.',
-    body: 'No app if a button works. No cloud if local works. Every extra part is another thing to fail, so the simplest version that does the job usually wins.',
-  },
-]
-
-function Approach() {
+function Journey() {
   return (
-    <section className="approach" id="approach">
-      <div className="shell">
-        <SectionHead index={2} label="Approach" title="How I work" />
-        <ol className="principles">
-          {principles.map((p, i) => (
-            <li key={p.title} data-reveal style={{ '--d': `${i * 80}ms` }}>
-              <span className="mono">{pad(i + 1)}</span>
-              <h3>{p.title}</h3>
-              <p>{p.body}</p>
-            </li>
-          ))}
-        </ol>
+    <section className="journey" id="journey" aria-labelledby="journey-title">
+      <div className="shell journey-grid">
+        <div className="journey-portrait">
+          <Photo
+            image={media.labOverhead}
+            sizes="(max-width: 960px) 100vw, 50vw"
+            alt="Ahson sitting at a workbench in the Flux lab, surrounded by soldering equipment, an oscilloscope, resin printers and two laptops"
+          />
+        </div>
+        <div className="journey-copy">
+          <h2 id="journey-title" className="section-title">My Creator Journey</h2>
+          <p className="journey-lede">
+            I started filming what I was building because the process seemed like the most
+            interesting part.
+          </p>
+          <p>
+            A finished product rarely shows the failed prints, the design changes, the late nights
+            or the problem nobody saw coming. That is most of the work, so that is what I share.
+          </p>
+          <p>
+            On Instagram I post prototypes, experiments, failures and progress as they happen.
+            Explaining a build to other people means I have to actually understand it, and sharing
+            the process has become part of how I build and learn.
+          </p>
+          <p>
+            I also have an ongoing collaboration with <a href={links.flux} target="_blank" rel="noreferrer">Flux</a>,
+            a PCB design platform that has supported my electronics and PCB design work and
+            content. The photos in this section were taken in their lab.
+          </p>
+          <a className="cta" href={links.instagram} target="_blank" rel="noreferrer">
+            Follow the build <span className="cta-handle">@ahsonmade</span> <Arrow />
+          </a>
+          <figure className="journey-still">
+            <Photo
+              image={media.labStanding}
+              sizes="(max-width: 600px) 60vw, 260px"
+              alt="Ahson explaining a build to the camera in the Flux lab, holding a small component"
+            />
+            <figcaption>Filming a build update in the lab.</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
   )
@@ -313,55 +384,45 @@ function Approach() {
 
 function About() {
   return (
-    <section className="section shell" id="about">
-      <SectionHead index={3} label="About" title="About" />
-      <div className="about-grid">
-        <div className="about-copy" data-reveal>
-          <p>
-            I am an electrical engineering student in Santa Cruz. Most of my time goes into building
-            things: wiring a circuit on the bench, modeling the part that holds it, printing it,
-            breaking it, and doing it again.
-          </p>
-          <p>
-            I care about products that work the first time someone touches them, and designs that
-            respect the constraints they were given.
-          </p>
-        </div>
-        <dl className="capabilities" data-reveal>
-          {capabilities.map(([k, v]) => (
-            <div key={k}><dt className="mono">{k}</dt><dd>{v}</dd></div>
-          ))}
-        </dl>
+    <section className="about shell" id="about" aria-labelledby="about-title">
+      <h2 id="about-title" className="section-title">About</h2>
+      <div className="about-body">
+        <p>
+          I am an electrical engineering student at UC Santa Cruz. I am most interested in
+          electronics, embedded systems, hardware development, mechanical integration and product
+          design, especially where a circuit has to become a physical thing someone can use.
+        </p>
+        <Facts items={[
+          ['Degree', 'B.S. Electrical Engineering'],
+          ['University', 'University of California, Santa Cruz'],
+          ['Graduation', 'Expected 2027'],
+        ]} />
       </div>
     </section>
   )
 }
 
 function Contact() {
-  const [copied, setCopied] = useState(false)
-  const copy = () => {
-    navigator.clipboard?.writeText(contact.email).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1600)
-    }).catch(() => {})
-  }
+  const elsewhere = [
+    { label: 'GitHub', href: links.github },
+    links.linkedin && { label: 'LinkedIn', href: links.linkedin },
+    { label: 'Instagram', href: links.instagram },
+    links.resume && { label: 'Résumé (PDF)', href: links.resume },
+  ].filter(Boolean)
+
   return (
-    <section className="contact" id="contact">
+    <section className="contact" id="contact" aria-labelledby="contact-title">
       <div className="shell">
-        <span className="mono section-index">04 &mdash; Contact</span>
-        <div className="contact-main" data-reveal>
-          <a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a>
-          <button className="mono copy" onClick={copy}>{copied ? 'Copied' : 'Copy address'}</button>
-        </div>
+        <h2 id="contact-title" className="section-title">Contact</h2>
+        <a className="contact-email" href={`mailto:${links.email}`}>{links.email}</a>
         <ul className="contact-links">
-          {contact.links.map((l) => (
-            <li key={l.href}><a href={l.href} target="_blank" rel="noreferrer">{l.label} <span aria-hidden="true">&#8599;</span></a></li>
+          {elsewhere.map((l) => (
+            <li key={l.label}><a href={l.href} target="_blank" rel="noreferrer">{l.label} <Arrow /></a></li>
           ))}
         </ul>
-        <footer className="footer mono">
+        <footer className="footer">
           <span>&copy; {new Date().getFullYear()} Ahson Momin</span>
-          <span>Designed and built in Santa Cruz, CA</span>
-          <span>Rev 2026.10</span>
+          <span>Santa Cruz, California</span>
         </footer>
       </div>
     </section>
@@ -369,15 +430,14 @@ function Contact() {
 }
 
 export default function App() {
-  useReveal()
-  const active = useActiveSheet()
   return (
     <>
-      <Header active={active} />
+      <a className="skip" href="#work">Skip to work</a>
+      <Header />
       <main>
         <Hero />
         <Work />
-        <Approach />
+        <Journey />
         <About />
         <Contact />
       </main>
