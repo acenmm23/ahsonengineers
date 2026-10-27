@@ -17,16 +17,14 @@ export function LittleLedgerPanel({ className = '' }) {
   )
 }
 
-// Traced from the AM monogram PNG (media-originals/monogram.png). Small sizes need a
-// heavier stroke to stay legible.
-export function Monogram({ className, weight = 14 }) {
+// Traced from the AM monogram PNG (media-originals/monogram-v2.png): the A and M share
+// the middle stem. One filled outline; the second subpath cuts the A's counter.
+export const MONOGRAM_PATH = 'M497 653 832 234 985 410 1128 236H1150V653H1118V296L985 460 853 300V653H821V484H668L537 653ZM692 455H821V292Z'
+
+export function Monogram({ className }) {
   return (
-    <svg className={className} viewBox="485 228 725 422" aria-hidden="true">
-      <g fill="none" stroke="currentColor" strokeWidth={weight} strokeLinejoin="miter" strokeMiterlimit="10">
-        <path d="M490 670 800 250l197 201 198-201v410" />
-        <path d="M803 252v410" />
-        <path d="M645 467h158" />
-      </g>
+    <svg className={className} viewBox="488 226 672 435" aria-hidden="true">
+      <path fill="currentColor" fillRule="evenodd" d={MONOGRAM_PATH} />
     </svg>
   )
 }
@@ -107,7 +105,7 @@ export function Header() {
           ))}
         </nav>
         <a href="/" className="brand" aria-label="Ahson Momin, home">
-          <Monogram className="brand-mark" weight={30} />
+          <Monogram className="brand-mark" />
         </a>
         {/* On phones the profile links give way to Contact, keeping the logo centred. */}
         <nav className="header-social" aria-label="Profiles">
