@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { links, media, portrait, projects } from './content.js'
 import { Header, Contact, Photo, Arrow, LittleLedgerPanel } from './components.jsx'
 
-// "Ahson" sits behind the portrait; "Momin" sits in front of it, outlined.
+// The name is set twice: the real <h1>, and an aria-hidden light copy masked to the
+// portrait's silhouette so "Momin" turns light exactly where it crosses it.
 function NameLines() {
   return (
     <>
@@ -13,7 +14,8 @@ function NameLines() {
 }
 
 function Hero() {
-  // Fade the portrait in once it has loaded.
+  // The light copy of "Momin" only makes sense once the portrait is on screen;
+  // before that it would be light text on a light page.
   const [ready, setReady] = useState(false)
   const imgRef = useRef(null)
   useEffect(() => {
@@ -46,7 +48,7 @@ function Hero() {
           <div className="hero-frame">
             <div
               className={`hero-stage ${ready ? 'is-ready' : ''}`}
-              style={{ '--portrait-cleanup': `url(${portrait.cleanup})` }}
+              style={{ '--portrait-src': `url(${portrait.src})`, '--portrait-cleanup': `url(${portrait.cleanup})` }}
             >
               <h1 className="hero-name"><NameLines /></h1>
               <div className="hero-portrait">
@@ -61,6 +63,7 @@ function Hero() {
                   decoding="async"
                 />
               </div>
+              <div className="hero-name hero-name-light" aria-hidden="true"><NameLines /></div>
             </div>
           </div>
         </div>
@@ -88,13 +91,12 @@ function Hero() {
         </div>
 
         <div className="work-lead" id="work">
-          <div>
-            <h2 id="work-title">things I've made</h2>
-            <p>Hardware, circuits and software. Each one opens into the full story: what I built, what broke and what changed.</p>
-          </div>
-          <svg className="work-arrow" viewBox="0 0 20 64" aria-hidden="true">
-            <path d="M10 0v61M2 53l8 8 8-8" fill="none" stroke="currentColor" strokeWidth="2" />
-          </svg>
+          <h2 id="work-title">
+            things I've made
+            <svg className="work-arrow" viewBox="0 0 16 36" aria-hidden="true">
+              <path d="M8 0v34M1.5 27.5 8 34l6.5-6.5" fill="none" stroke="currentColor" strokeWidth="2" />
+            </svg>
+          </h2>
         </div>
       </div>
     </section>

@@ -97,21 +97,22 @@ a:hover .arrow-down { transform: translateY(3px); }
    at the centre of the column gap (--g / 2), so the step reads as one line. */
 .hero { padding: calc(var(--header) + 48px) 0 0; }
 .hero-grid {
-  /* The step is only as wide as the composition plus half the gap, so the raised part
-     stays tucked under the name and the drop sits close beside it. */
+  /* The left column is just wide enough for the name ("Momin" ends at ~85% of the
+     440px composition), so the raised rule drops right after it. The frame keeps its
+     full width and overhangs into the gap, which is empty there. */
   --g: clamp(40px, 4.5vw, 72px);
   display: grid;
-  grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 384px) minmax(0, 1fr);
   grid-template-rows: auto 1fr;
   column-gap: var(--g);
 }
 .hero-left { grid-column: 1; grid-row: 1; margin-right: calc(var(--g) / -2); border-bottom: 1px solid var(--text); }
-.hero-frame { container-type: inline-size; width: min(100%, 460px); }
+.hero-frame { container-type: inline-size; width: 440px; }
 
 
 /* One scalable composition: type, portrait and mask are sized in cqw of the frame, so
    the overlap is identical at every width. Layers, back to front:
-   "Ahson" -> portrait -> "Momin" (page colour, outlined). */
+   "Ahson" -> portrait -> "Momin" (dark) -> "Momin" (light, masked to the silhouette). */
 .hero-stage {
   --top: 6cqw;                        /* headroom so the hair is never clipped */
   --f: 27cqw;                         /* "Momin" spans ~88% of the frame */
@@ -138,8 +139,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 }
 .hero-name span { display: block; position: relative; margin-left: -0.05em; }
 .hero-name .l1 { z-index: 1; }
-/* "Momin" in front of the portrait: page-colour fill with a thin ink outline. */
-.hero-name .l2 { z-index: 3; color: var(--bg); -webkit-text-stroke: 0.016em var(--text); }
+.hero-name .l2 { z-index: 3; }
 .hero-portrait {
   position: absolute;
   z-index: 2;
@@ -158,8 +158,33 @@ a:hover .arrow-down { transform: translateY(3px); }
   -webkit-mask: var(--portrait-cleanup) 0 0 / 100% 100% no-repeat;
   mask: var(--portrait-cleanup) 0 0 / 100% 100% no-repeat;
 }
-.hero-portrait { opacity: 0; transition: opacity 0.35s ease; }
-.is-ready .hero-portrait { opacity: 1; }
+.hero-name-light {
+  position: absolute;
+  top: var(--top);
+  left: 0;
+  right: 0;
+  z-index: 4;
+  color: var(--bg);
+  pointer-events: none;
+  -webkit-mask-image: var(--portrait-src), var(--portrait-cleanup);
+  mask-image: var(--portrait-src), var(--portrait-cleanup);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: var(--px) var(--py);
+  mask-position: var(--px) var(--py);
+  -webkit-mask-size: var(--pw) auto;
+  mask-size: var(--pw) auto;
+}
+.hero-name-light .l1 { visibility: hidden; }
+.hero-name-light, .hero-portrait { opacity: 0; transition: opacity 0.35s ease; }
+.is-ready .hero-name-light, .is-ready .hero-portrait { opacity: 1; }
+/* Without mask compositing the light copy would cover the whole line; drop it and keep
+   the plain dark name in front. */
+@supports not ((mask-composite: intersect) or (-webkit-mask-composite: source-in)) {
+  .hero-name-light { display: none; }
+}
 
 .hero-intro {
   grid-column: 2;
@@ -201,12 +226,8 @@ a:hover .arrow-down { transform: translateY(3px); }
 .work-lead {
   grid-column: 1;
   grid-row: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
   margin-right: calc(var(--g) / -2);
-  padding: 28px calc(var(--g) / 2) 20px 0;
+  padding: 24px calc(var(--g) / 2) 24px 0;
   border-right: 1px solid var(--text);
 }
 /* A quiet lead-in to the projects, deliberately smaller than the hero type. */
@@ -217,8 +238,8 @@ a:hover .arrow-down { transform: translateY(3px); }
   letter-spacing: -0.025em;
   font-weight: 700;
 }
-.work-lead p { margin-top: 8px; max-width: 34ch; font-size: 14.5px; line-height: 1.5; color: var(--muted); }
-.work-arrow { flex: none; width: 20px; height: 64px; color: #e0461c; }
+/* Arrow sized to the letters: from cap height down to the baseline. */
+.work-arrow { display: inline-block; width: 0.32em; height: 0.72em; margin-left: 0.3em; vertical-align: -0.02em; color: #e0461c; }
 .entries { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 72px clamp(28px, 3.5vw, 56px); }
 .entry { display: flex; flex-direction: column; }
 .entry-meta { display: flex; align-items: baseline; gap: 12px; margin-top: 18px; }
@@ -444,8 +465,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 @media (max-width: 900px) {
   .hero { padding-top: calc(var(--header) + 48px); }
   .hero-grid { --g: 40px; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
-  .work-lead { flex-direction: column; align-items: flex-start; }
-  .work-arrow { height: 48px; }
+  .hero-frame { width: 100%; }
   .hero-hello { font-size: 48px; }
   .hero-intro { font-size: 16.5px; }
 
@@ -468,8 +488,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero-left, .hero-intro, .work-lead { grid-column: 1; grid-row: auto; margin: 0; }
   .hero-frame { width: min(100%, 440px); }
   .hero-intro { padding: 0; border-bottom: 0; }
-  .work-lead { flex-direction: row; align-items: flex-end; padding: 40px 0 0; border-right: 0; }
-  .work-arrow { height: 48px; }
+  .work-lead { padding: 40px 0 0; border-right: 0; }
   .work { padding-top: 40px; }
   .entries { grid-template-columns: 1fr; row-gap: 56px; }
   .entry-summary { font-size: 16px; }
