@@ -195,7 +195,9 @@ a:hover .arrow-down { transform: translateY(3px); }
   padding: 8px 0 56px calc(var(--g) / 2);
   border-bottom: 1px solid var(--text);
 }
-.hero-intro > * { max-width: 36rem; }
+/* The intro block is centred in the space right of the step, so it sits balanced between
+   the drop and the right edge instead of crowding the name. */
+.hero-intro > * { max-width: 36rem; margin-left: auto; margin-right: auto; }
 .hero-intro { font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
 .hero-hello {
   margin-bottom: 18px;
@@ -234,6 +236,9 @@ a:hover .arrow-down { transform: translateY(3px); }
 }
 /* A quiet lead-in to the projects, deliberately smaller than the hero type. */
 .work-lead h2 {
+  /* Centred under the torso: the hoodie's centre sits at ~48.5% of the 440px frame. */
+  width: 427px;
+  text-align: center;
   font-family: var(--display);
   font-size: clamp(24px, 2vw, 30px);
   line-height: 1.05;
@@ -468,6 +473,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero { padding-top: calc(var(--header) + 48px); }
   .hero-grid { --g: 40px; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
   .hero-frame { width: 100%; }
+  .work-lead h2 { width: 97%; }
   .hero-hello { font-size: 48px; }
   .hero-intro { font-size: 16.5px; }
 
@@ -491,6 +497,8 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero-frame { width: min(100%, 440px); }
   .hero-intro { padding: 0; border-bottom: 0; }
   .work-lead { padding: 40px 0 0; border-right: 0; }
+  .work-lead h2 { width: auto; text-align: left; }
+  .hero-intro > * { margin-left: 0; }
   .work { padding-top: 40px; }
   .entries { grid-template-columns: 1fr; row-gap: 56px; }
   .entry-summary { font-size: 16px; }
