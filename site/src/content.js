@@ -25,6 +25,9 @@ export const media = {
   betterkeyV1V4: photo('betterkey-v1-v4', [1500, 800], 1500, 1000),
   betterkeyPrints: photo('betterkey-prints', [1320, 800], 1320, 700),
   perfboard: photo('ece118-perfboard', [1258, 800], 1258, 877),
+  // Composed from the five schematic figures in the Lab 2 report (originals in media-originals/).
+  schematic: photo('ece118-schematic', [2000, 1000], 2000, 1200),
+  solderSide: photo('ece118-solder-side', [1400, 800], 1400, 933),
   labOverhead: photo('lab-overhead', [1206, 700], 1206, 1706),
 }
 
@@ -49,8 +52,12 @@ export const projects = [
     summary:
       'A retrofit for the deadbolt you already have, operated by a dedicated RF key fob while the existing lock and key keep working by hand. The hard part is physical: packing a motor, batteries and electronics onto the back of a door, which has meant moving from rough, oversized prototypes toward a compact enclosure.',
     status: 'Prototypes built and tested on a rig; compact enclosure in development.',
-    image: media.betterkeyPrints,
-    alt: 'Printed BetterKey enclosures from several iterations on a desk, with a gearmotor, battery pack and calipers',
+    // First slide shows by default; the rest slide in on hover.
+    slides: [
+      { image: media.betterkeyPrints },
+      { image: media.betterkeyV1V4 },
+      { image: media.betterkeyCad },
+    ],
   },
   {
     slug: 'ece118',
@@ -61,8 +68,11 @@ export const projects = [
     summary:
       'A single-supply circuit that picks a 2 kHz infrared beacon out of room light: transimpedance front end, eight band-pass stages, a precision peak detector and a comparator with hysteresis. Debugged on a breadboard, then rebuilt by hand on perfboard and brought up stage by stage.',
     status: 'Built on perfboard; stage gains measured after debugging.',
-    image: media.perfboard,
-    alt: 'Hand-soldered perfboard with four quad op-amp chips in a row, filter components, a screw-terminal power input and a green LED',
+    slides: [
+      { image: media.perfboard },
+      { image: media.schematic, contain: true },
+      { image: media.solderSide },
+    ],
   },
   {
     slug: 'little-ledger',

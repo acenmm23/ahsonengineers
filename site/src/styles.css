@@ -55,6 +55,8 @@ a:hover .arrow-down { transform: translateY(3px); }
 }
 .text-links a:hover, .contact-links a:hover, .facts a:hover, .prose a:hover { text-decoration-color: var(--rule); }
 
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
 .skip {
   position: absolute;
   left: 16px;
@@ -85,15 +87,15 @@ a:hover .arrow-down { transform: translateY(3px); }
 .header nav a:hover { color: var(--text); }
 
 /* Hero
-   Left: the name/portrait composition. Right: the introduction, given equal weight. */
+   Left: the introduction. Right: the name/portrait composition. */
 .hero { padding: calc(var(--header) + 64px) 0 112px; }
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   column-gap: clamp(40px, 6vw, 104px);
   align-items: center;
 }
-.hero-frame { container-type: inline-size; }
+.hero-frame { container-type: inline-size; width: min(100%, 440px); justify-self: end; }
 
 /* One scalable composition: type, portrait and mask are sized in cqw of the frame, so
    the overlap is identical at every width. Layers, back to front:
@@ -133,9 +135,8 @@ a:hover .arrow-down { transform: translateY(3px); }
   left: var(--px);
   top: calc(var(--top) + var(--py));
   width: var(--pw);
-  /* A soft hairline of the ink color along the silhouette: separates the cutout from
-     the page and hides residual edge pixels without reading as a sticker outline. */
-  filter: drop-shadow(0 0 0.6px rgba(28, 28, 26, 0.75)) drop-shadow(0 0 0.4px rgba(28, 28, 26, 0.5));
+  /* SVG filter in Home.jsx: firms up the cutout's soft edge and adds a 2px ink outline */
+  filter: url(#portrait-outline);
 }
 .hero-portrait img {
   width: 100%;
@@ -175,7 +176,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 .hero-intro { max-width: 34rem; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
 .hero-hello {
   margin-bottom: 18px;
-  font-size: clamp(32px, 3.1vw, 46px);
+  font-size: clamp(48px, 4.8vw, 72px);
   line-height: 1;
   letter-spacing: -0.035em;
   font-weight: 620;
@@ -226,9 +227,15 @@ a:hover .arrow-down { transform: translateY(3px); }
   font-variation-settings: 'wdth' 80;
 }
 .entry-title a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.1em; }
-.entry-media { grid-area: media; display: block; overflow: hidden; background: var(--placeholder); }
-.entry-media img, .entry-media .ll-panel { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.entry:hover .entry-media img { transform: scale(1.02); }
+.entry-media { grid-area: media; align-self: start; position: relative; display: block; overflow: hidden; background: var(--placeholder); }
+.entry-media .ll-panel, .slides img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.slides::-webkit-scrollbar { display: none; }
+.slides img { flex: 0 0 100%; scroll-snap-align: start; }
+.slides img.is-contain { object-fit: contain; background: var(--bg); }
+.slide-dots { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 6px; pointer-events: none; }
+.slide-dots i { width: 18px; height: 3px; background: rgba(246, 245, 241, 0.5); box-shadow: 0 0 0 0.5px rgba(28, 28, 26, 0.35); transition: background 0.3s; }
+.slide-dots i.is-on { background: #f6f5f1; }
 .entry-body { grid-area: body; margin-top: 18px; }
 .entry-disciplines { font-size: 14px; line-height: 1.5; }
 .entry-summary { margin-top: 12px; max-width: 46ch; font-size: 16px; line-height: 1.6; color: var(--muted); }
@@ -431,7 +438,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 @media (max-width: 900px) {
   .hero { padding-top: calc(var(--header) + 48px); padding-bottom: 88px; }
   .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 40px; }
-  .hero-hello { font-size: 32px; }
+  .hero-hello { font-size: 48px; }
   .hero-intro { font-size: 16.5px; }
 
   .entry {
@@ -442,7 +449,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   }
   .entry-title { margin-top: 14px; }
   .entry-media { margin-top: 22px; }
-  .entry-media img, .entry-media .ll-panel { aspect-ratio: 3 / 2; }
+  .entry-media .ll-panel, .slides img { aspect-ratio: 3 / 2; }
   .entry-summary, .entry-status { max-width: 60ch; }
 
   .journey-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -457,7 +464,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 /* Small tablets and phones: hero stacks, composition first */
 @media (max-width: 700px) {
   .hero-grid { grid-template-columns: 1fr; row-gap: 36px; }
-  .hero-frame { width: min(100%, 460px); }
+  .hero-frame { width: min(100%, 420px); justify-self: start; order: -1; }
   .hero-intro { max-width: 36rem; font-size: 17px; }
 }
 
@@ -469,7 +476,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   .header nav a { font-size: 14px; }
   .hero { padding-top: calc(var(--header) + 28px); padding-bottom: 72px; }
   .hero-grid { row-gap: 28px; }
-  .hero-frame { width: 88%; }
+  .hero-frame { width: 84%; }
   .hero-hello { margin-bottom: 14px; }
   .hero-intro { font-size: 17px; }
   .hero-facts > div { grid-template-columns: 72px 1fr; gap: 12px; }

@@ -231,7 +231,20 @@ export function Ece118Page() {
         eager
       />
 
-      <Chapter stage="Signal path" title="Six stages from light to logic">
+      <Chapter
+        stage="Signal path"
+        title="Six stages from light to logic"
+        wide
+        media={
+          <Figure
+            image={media.schematic}
+            sizes="(max-width: 900px) 100vw, 1320px"
+            alt="Full schematic of the beacon detector: power and 1.65 V reference, phototransistor and transimpedance amplifier, eight band-pass stages, precision peak detector, comparator with hysteresis and LED output buffer"
+            label="Full schematic, as built"
+            caption="Redrawn after the perfboard bring-up so it matches the board, including the corrected op-amp inputs and the redesigned comparator."
+          />
+        }
+      >
         <ol className="steps">
           {beaconStages.map(([name, text], i) => (
             <li key={name}>
@@ -260,7 +273,19 @@ export function Ece118Page() {
         </p>
       </Chapter>
 
-      <Chapter stage="Perfboard" title="Debugging the soldered board">
+      <Chapter
+        stage="Perfboard"
+        title="Debugging the soldered board"
+        media={
+          <Figure
+            image={media.solderSide}
+            sizes="(max-width: 900px) 100vw, 880px"
+            alt="Solder side of the perfboard, with bare-wire power and reference rails running across the board and insulated jumpers between stages"
+            label="Solder side"
+            caption="Bare-wire buses carry +3.3 V, ground and VREF; insulated jumpers carry signals between stages and power to each chip."
+          />
+        }
+      >
         <p>
           Almost every fault traced back to the schematic we soldered from, not to the soldering
           itself. Testing stage by stage with a scope, DC bias first and then AC gain, found each one.
@@ -297,7 +322,7 @@ export function Ece118Page() {
       <Chapter stage="Next" title="What is left">
         <p>
           VREF dropped out once during testing and recovered on its own, which points to a marginal
-          solder joint we still need to find. Scope captures and the full schematic will be added here.
+          solder joint we still need to find. Scope captures will be added here.
         </p>
       </Chapter>
     </ProjectLayout>
