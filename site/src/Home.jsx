@@ -70,9 +70,9 @@ function Hero() {
 
         <div className="hero-intro" id="about">
           <p className="hero-hello">hey!</p>
-          <p>A lot of what I build starts with a problem that seems harder than it should be.</p>
+          <p>Most of what I build starts with something that annoyed me more than it should have.</p>
           <p>
-            I'm Ahson, an electrical engineering student at UC Santa Cruz. theBetterKey started
+            I'm Ahson, an electrical engineering student at UC Santa Cruz. BetterKey started
             with wanting a simpler way to unlock a door. Little Ledger came from seeing how much
             paperwork my mom handles running her daycare.
           </p>
