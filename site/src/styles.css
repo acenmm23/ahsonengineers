@@ -80,10 +80,12 @@ a:hover .arrow-down { transform: translateY(3px); }
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--rule);
 }
-.header-inner { height: var(--header); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.brand { display: flex; align-items: center; gap: 12px; padding: 8px 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
-.brand-mark { width: 31px; height: 18px; flex: none; }
+.header-inner { height: var(--header); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+.brand { display: flex; align-items: center; justify-content: center; padding: 10px 4px; }
+.brand-mark { width: 40px; height: 23px; flex: none; }
 .header nav { display: flex; gap: 28px; }
+.header-social { justify-content: flex-end; }
+.header .narrow-only { display: none; }
 .header nav a { padding: 10px 0; font-size: 14px; color: var(--muted); transition: color 0.15s; }
 .header nav a:hover { color: var(--text); }
 
@@ -94,11 +96,11 @@ a:hover .arrow-down { transform: translateY(3px); }
 .hero { padding: calc(var(--header) + 64px) 0 0; border-bottom: 1px solid var(--text); }
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   column-gap: clamp(40px, 6vw, 104px);
   align-items: end;
 }
-.hero-frame { container-type: inline-size; width: min(100%, 440px); justify-self: end; }
+.hero-frame { container-type: inline-size; width: min(100%, 600px); justify-self: start; }
 
 /* One scalable composition: type, portrait and mask are sized in cqw of the frame, so
    the overlap is identical at every width. Layers, back to front:
@@ -176,7 +178,8 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero-name-light { display: none; }
 }
 
-.hero-intro { padding-bottom: 76px; max-width: 34rem; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
+/* Intro sits beside the composition, vertically centred, clear of the rule below. */
+.hero-intro { align-self: center; padding-bottom: 40px; max-width: 34rem; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
 .hero-hello {
   margin-bottom: 18px;
   font-size: clamp(48px, 4.8vw, 72px);
@@ -201,38 +204,34 @@ a:hover .arrow-down { transform: translateY(3px); }
   letter-spacing: 0.01em;
 }
 
-/* Selected work: one consistent entry per project. Each starts on its own ink rule
-   with a number and category, so neighbours never read as one continuous story. */
-.work { padding-bottom: 48px; }
-/* The label sits just above that rule, beside the hero; the first entry starts on it. */
-.work > .section-title { padding-top: 0; border-top: 0; margin: -38px 0 0; height: 38px; color: var(--muted); }
-.entry:first-child { border-top: 0; }
-.entry {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  grid-template-areas:
-    'meta media'
-    'title media'
-    'body media';
-  grid-template-rows: auto auto 1fr;
-  column-gap: clamp(32px, 4.5vw, 72px);
-  padding: 22px 0 96px;
-  border-top: 1px solid var(--text);
-}
-.entry-meta { grid-area: meta; display: flex; align-items: baseline; gap: 14px; }
-.entry-no { color: var(--muted); }
-.entry-category { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-.entry-title {
-  grid-area: title;
-  margin-top: 22px;
-  font-size: clamp(40px, 4.4vw, 68px);
+/* Work: a heading, then a two-column grid of projects. Every card has the same
+   order (image, number + category, title, summary, status, link), so the grid stays
+   scannable as more projects are added. */
+.work { padding: 88px 0 56px; }
+.work-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px 64px; flex-wrap: wrap; margin-bottom: 48px; }
+.work-head h2 {
+  font-family: var(--display);
+  font-size: clamp(40px, 4.6vw, 68px);
   line-height: 0.95;
   letter-spacing: -0.04em;
+  font-weight: 700;
+}
+.work-head p { max-width: 40ch; font-size: 16px; line-height: 1.55; color: var(--muted); }
+.entries { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 72px clamp(28px, 3.5vw, 56px); }
+.entry { display: flex; flex-direction: column; }
+.entry-meta { display: flex; align-items: baseline; gap: 12px; margin-top: 18px; }
+.entry-no { color: var(--muted); }
+.entry-category { font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.entry-title {
+  margin-top: 10px;
+  font-size: clamp(30px, 2.7vw, 42px);
+  line-height: 1;
+  letter-spacing: -0.035em;
   font-weight: 700;
   font-family: var(--display);
 }
 .entry-title a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.1em; }
-.entry-media { grid-area: media; align-self: start; position: relative; display: block; overflow: hidden; background: var(--placeholder); }
+.entry-media { position: relative; display: block; overflow: hidden; background: var(--placeholder); }
 .entry-media .ll-panel, .slides img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
 .slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .slides::-webkit-scrollbar { display: none; }
@@ -241,11 +240,11 @@ a:hover .arrow-down { transform: translateY(3px); }
 .slide-dots { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 6px; pointer-events: none; }
 .slide-dots i { width: 18px; height: 3px; background: rgba(246, 245, 241, 0.5); box-shadow: 0 0 0 0.5px rgba(28, 28, 26, 0.35); transition: background 0.3s; }
 .slide-dots i.is-on { background: #f6f5f1; }
-.entry-body { grid-area: body; margin-top: 18px; }
-.entry-disciplines { font-size: 14px; line-height: 1.5; }
-.entry-summary { margin-top: 12px; max-width: 46ch; font-size: 16px; line-height: 1.6; color: var(--muted); }
-.entry-status { display: flex; gap: 14px; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--rule); max-width: 46ch; font-size: 14px; line-height: 1.5; }
+.entry-body { display: flex; flex-direction: column; flex: 1; margin-top: 12px; }
+.entry-summary { max-width: 52ch; font-size: 16px; line-height: 1.6; color: var(--muted); }
+.entry-status { display: flex; gap: 14px; margin-top: auto; padding-top: 14px; max-width: 52ch; font-size: 14px; line-height: 1.5; }
 .entry-status span { flex: none; width: 52px; color: var(--muted); }
+.entry-body .explore { align-self: flex-start; }
 .explore {
   display: inline-flex;
   align-items: baseline;
@@ -442,20 +441,12 @@ a:hover .arrow-down { transform: translateY(3px); }
 /* Tablet: keep the hero side by side, with equal columns */
 @media (max-width: 900px) {
   .hero { padding-top: calc(var(--header) + 48px); }
-  .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 40px; }
+  .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: 36px; }
   .hero-hello { font-size: 48px; }
   .hero-intro { font-size: 16.5px; }
 
-  .entry {
-    grid-template-columns: 1fr;
-    grid-template-areas: 'meta' 'title' 'media' 'body';
-    grid-template-rows: none;
-    padding-bottom: 72px;
-  }
-  .entry-title { margin-top: 14px; }
-  .entry-media { margin-top: 22px; }
-  .entry-media .ll-panel, .slides img { aspect-ratio: 3 / 2; }
-  .entry-summary, .entry-status { max-width: 60ch; }
+  .entries { row-gap: 56px; }
+  .entry-summary { font-size: 15px; }
 
   .journey-grid { grid-template-columns: 1fr; gap: 48px; }
   .journey-portrait { max-width: 560px; }
@@ -470,18 +461,20 @@ a:hover .arrow-down { transform: translateY(3px); }
 @media (max-width: 700px) {
   .hero-grid { grid-template-columns: 1fr; row-gap: 36px; }
   .hero { padding-bottom: 72px; border-bottom: 0; }
-  .hero-frame { width: min(100%, 420px); justify-self: start; order: -1; }
+  .hero-frame { width: min(100%, 440px); justify-self: start; }
   .hero-stage { border-bottom: 1px solid var(--text); }
   .hero-intro { padding-bottom: 0; }
-  .work > .section-title { margin: 0 0 18px; height: auto; }
-  .entry:first-child { border-top: 1px solid var(--text); }
+  .work { padding-top: 64px; }
+  .entries { grid-template-columns: 1fr; row-gap: 56px; }
+  .entry-summary { font-size: 16px; }
   .hero-intro { max-width: 36rem; font-size: 17px; }
 }
 
 /* Phones */
 @media (max-width: 600px) {
   :root { --gutter: 20px; }
-  .brand span { display: none; }
+  .header .wide-only { display: none; }
+  .header .narrow-only { display: inline; }
   .header nav { gap: 22px; }
   .header nav a { font-size: 14px; }
   .hero { padding-top: calc(var(--header) + 28px); padding-bottom: 72px; }
@@ -491,9 +484,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero-intro { font-size: 17px; }
   .hero-facts > div { grid-template-columns: 72px 1fr; gap: 12px; }
 
-  .entry { padding: 18px 0 64px; }
-  .entry-title { font-size: 40px; }
-  .entry-summary { font-size: 15.5px; }
+  .work-head { margin-bottom: 32px; }
 
   .journey { padding: 88px 0; }
   .contact { padding-top: 72px; }

@@ -41,28 +41,6 @@ function Hero() {
       </svg>
 
       <div className="hero-grid">
-        <div className="hero-intro" id="about">
-          <p className="hero-hello">hey!</p>
-          <p>
-            I'm an electrical engineering student at UC Santa Cruz, and I like turning ideas into
-            things that actually work. A lot of that means building an imperfect first version,
-            figuring out what went wrong, and working through the next one.
-          </p>
-          <p>
-            Right now I'm developing BetterKey, building Little Ledger for small daycare providers,
-            and documenting what I learn along the way.
-          </p>
-          <dl className="hero-facts">
-            <div><dt>Studying</dt><dd>B.S. Electrical Engineering, UC Santa Cruz, expected 2027</dd></div>
-            <div><dt>Into</dt><dd>Electronics, embedded systems, hardware, product design</dd></div>
-          </dl>
-          <ul className="hero-links text-links">
-            <li><a href="#work">Explore my work <Arrow dir="down" /></a></li>
-            <li><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a></li>
-            <li><a href={links.instagram} target="_blank" rel="noreferrer">Instagram <Arrow /></a></li>
-          </ul>
-        </div>
-
         <div className="hero-frame">
           <div
             className={`hero-stage ${ready ? 'is-ready' : ''}`}
@@ -83,6 +61,28 @@ function Hero() {
             </div>
             <div className="hero-name hero-name-light" aria-hidden="true"><NameLines /></div>
           </div>
+        </div>
+
+        <div className="hero-intro" id="about">
+          <p className="hero-hello">hey!</p>
+          <p>
+            I'm an electrical engineering student at UC Santa Cruz, and I like turning ideas into
+            things that actually work. A lot of that means building an imperfect first version,
+            figuring out what went wrong, and working through the next one.
+          </p>
+          <p>
+            Right now I'm developing BetterKey, building Little Ledger for small daycare providers,
+            and documenting what I learn along the way.
+          </p>
+          <dl className="hero-facts">
+            <div><dt>Studying</dt><dd>B.S. Electrical Engineering, UC Santa Cruz, expected 2027</dd></div>
+            <div><dt>Into</dt><dd>Electronics, embedded systems, hardware, product design</dd></div>
+          </dl>
+          <ul className="hero-links text-links">
+            <li><a href="#work">Explore my work <Arrow dir="down" /></a></li>
+            <li><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a></li>
+            <li><a href={links.instagram} target="_blank" rel="noreferrer">Instagram <Arrow /></a></li>
+          </ul>
         </div>
       </div>
     </section>
@@ -136,16 +136,15 @@ function Entry({ project, index }) {
   const off = (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setActive(false) }
   return (
     <li className="entry" onMouseEnter={on} onMouseLeave={() => setActive(false)} onFocus={on} onBlur={off}>
+      <a className="entry-media" href={p.href} tabIndex={-1} aria-hidden="true">
+        {p.slides ? <Slides slides={p.slides} active={active} /> : <LittleLedgerPanel />}
+      </a>
       <p className="entry-meta">
         <span className="mono entry-no">{String(index + 1).padStart(2, '0')}</span>
         <span className="entry-category">{p.category}</span>
       </p>
       <h3 className="entry-title"><a href={p.href}>{p.title}</a></h3>
-      <a className="entry-media" href={p.href} tabIndex={-1} aria-hidden="true">
-        {p.slides ? <Slides slides={p.slides} active={active} /> : <LittleLedgerPanel />}
-      </a>
       <div className="entry-body">
-        <p className="entry-disciplines">{p.disciplines.join(' · ')}</p>
         <p className="entry-summary">{p.summary}</p>
         <p className="entry-status"><span>Status</span>{p.status}</p>
         <a className="explore" href={p.href} aria-label={`Explore project: ${p.title}`}>
@@ -159,7 +158,10 @@ function Entry({ project, index }) {
 function Work() {
   return (
     <section className="work shell" id="work" aria-labelledby="work-title">
-      <h2 id="work-title" className="section-title">Selected work</h2>
+      <header className="work-head">
+        <h2 id="work-title">things I've made</h2>
+        <p>Hardware, circuits and software. Each one opens into the full story: what I built, what broke and what changed.</p>
+      </header>
       <ol className="entries">
         {projects.map((p, i) => <Entry key={p.slug} project={p} index={i} />)}
       </ol>

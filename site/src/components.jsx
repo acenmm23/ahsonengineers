@@ -96,16 +96,24 @@ export function Facts({ items }) {
   )
 }
 
+// Sections on the left, the monogram centred, profiles on the right.
 export function Header() {
   return (
     <header className="header">
       <div className="shell header-inner">
+        <nav className="header-nav" aria-label="Sections">
+          {NAV.map((n) => (
+            <a key={n.href} href={n.href} className={n.label === 'Contact' ? 'wide-only' : undefined}>{n.label}</a>
+          ))}
+        </nav>
         <a href="/" className="brand" aria-label="Ahson Momin, home">
-          <Monogram className="brand-mark" weight={34} />
-          <span>Ahson Momin</span>
+          <Monogram className="brand-mark" weight={30} />
         </a>
-        <nav aria-label="Sections">
-          {NAV.map((n) => <a key={n.href} href={n.href}>{n.label}</a>)}
+        {/* On phones the profile links give way to Contact, keeping the logo centred. */}
+        <nav className="header-social" aria-label="Profiles">
+          <a href={links.linkedin} target="_blank" rel="noreferrer" className="wide-only">LinkedIn <Arrow /></a>
+          <a href={links.instagram} target="_blank" rel="noreferrer" className="wide-only">Instagram <Arrow /></a>
+          <a href="/#contact" className="narrow-only">Contact</a>
         </nav>
       </div>
     </header>

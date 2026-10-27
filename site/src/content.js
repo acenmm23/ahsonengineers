@@ -50,7 +50,7 @@ export const projects = [
     category: 'Hardware Product Development',
     disciplines: ['Mechanical Design', 'Embedded Systems', 'Rapid Prototyping'],
     summary:
-      'A retrofit for the deadbolt you already have, operated by a dedicated RF key fob while the existing lock and key keep working by hand. The hard part is physical: packing a motor, batteries and electronics onto the back of a door, which has meant moving from rough, oversized prototypes toward a compact enclosure.',
+      'A retrofit that lets a dedicated RF key fob operate the deadbolt you already have. Most of the work has been packing a motor, batteries and electronics into a compact enclosure.',
     status: 'Prototypes built and tested on a rig; compact enclosure in development.',
     // First slide shows by default; the rest slide in on hover.
     slides: [
@@ -66,7 +66,7 @@ export const projects = [
     category: 'Analog Circuit Design & Signal Conditioning',
     disciplines: ['From Breadboard to Perfboard', 'ECE 118'],
     summary:
-      'A single-supply circuit that picks a 2 kHz infrared beacon out of room light: transimpedance front end, eight band-pass stages, a precision peak detector and a comparator with hysteresis. Debugged on a breadboard, then rebuilt by hand on perfboard and brought up stage by stage.',
+      'A single-supply analog circuit that picks a 2 kHz infrared beacon out of room light. Debugged on a breadboard, then rebuilt by hand on perfboard and brought up stage by stage.',
     status: 'Built on perfboard; stage gains measured after debugging.',
     slides: [
       { image: media.perfboard },
@@ -81,7 +81,7 @@ export const projects = [
     category: 'iOS App Development & Product Strategy',
     disciplines: ['SwiftUI', 'Web Development', 'Customer Discovery'],
     summary:
-      'Built for a problem close to home. Little Ledger simplifies attendance, billing and records for small home daycare providers, shaped by watching my mom run hers and by conversations with other providers.',
+      'An iOS and web app for attendance, billing and records at small home daycares, shaped by my mom’s daycare and conversations with other providers.',
     status: 'In active development.',
     visual: 'little-ledger',
   },
