@@ -2,8 +2,9 @@
 
 Portfolio site for Ahson Momin. React + Vite.
 
-- Source: `site/` (links and media list in `site/src/content.js`, copy in `site/src/App.jsx`)
-- Built output: repo root (`index.html`, `assets/`, `media/`, `CNAME`, `favicon.svg`), served by GitHub Pages from `main`
+- Source: `site/`. Pages: `site/index.html` (home), `site/projects/betterkey/` and `site/projects/ece118/`, each rendering from `site/src/main.jsx`. Links and media list in `site/src/content.js`; copy in `Home.jsx` and `ProjectPages.jsx`
+- Hero: `media/portrait-cutout.webp` is used as supplied; `portrait-cleanup-mask.png` hides a few leftover background pixels from the cutout
+- Built output: repo root (`index.html`, `projects/`, `assets/`, `media/`, `CNAME`, `favicon.svg`), served by GitHub Pages from `main`
 - Photos and video: `site/public/media/` (two widths per photo); untouched originals in `media-originals/`
 
 ```bash
