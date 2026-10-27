@@ -24,14 +24,14 @@ function Hero() {
 
   return (
     <section className="hero shell" id="top">
-      {/* Hardens the cutout's soft edge and draws a crisp ink outline around it. */}
+      {/* Hardens the cutout's soft edge and draws a crisp orange outline around it. */}
       <svg className="sr-only" aria-hidden="true" focusable="false">
         <filter id="portrait-outline" x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
           <feComponentTransfer in="SourceGraphic" result="hard">
             <feFuncA type="linear" slope="4" intercept="-1.5" />
           </feComponentTransfer>
           <feMorphology in="hard" operator="dilate" radius="2" result="grown" />
-          <feFlood floodColor="#1c1c1a" />
+          <feFlood floodColor="#e0461c" />
           <feComposite in2="grown" operator="in" result="outline" />
           <feMerge>
             <feMergeNode in="outline" />

@@ -88,12 +88,12 @@ a:hover .arrow-down { transform: translateY(3px); }
 
 /* Hero
    Left: the introduction. Right: the name/portrait composition. */
-.hero { padding: calc(var(--header) + 64px) 0 112px; }
+.hero { padding: calc(var(--header) + 64px) 0 0; }
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   column-gap: clamp(40px, 6vw, 104px);
-  align-items: center;
+  align-items: end;
 }
 .hero-frame { container-type: inline-size; width: min(100%, 440px); justify-self: end; }
 
@@ -114,7 +114,6 @@ a:hover .arrow-down { transform: translateY(3px); }
   /* Crop only the bottom (the hem). The sides and top stay open so the hair and a
      wider fallback font are never cut off. */
   clip-path: inset(-20% -40% 0 -20%);
-  border-bottom: 1px solid var(--text);
 }
 .hero-name {
   position: relative;
@@ -135,8 +134,11 @@ a:hover .arrow-down { transform: translateY(3px); }
   left: var(--px);
   top: calc(var(--top) + var(--py));
   width: var(--pw);
-  /* SVG filter in Home.jsx: firms up the cutout's soft edge and adds a 2px ink outline */
+  /* SVG filter in Home.jsx: firms up the cutout's soft edge and adds a 2px orange outline.
+     The top is cropped slightly: a little cut hair reads better than leftover background
+     around the top curls. Applied after the filter, so the outline is cut flat too. */
   filter: url(#portrait-outline);
+  clip-path: inset(3% -6% 0 -6%);
 }
 .hero-portrait img {
   width: 100%;
@@ -173,7 +175,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero-name-light { display: none; }
 }
 
-.hero-intro { max-width: 34rem; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
+.hero-intro { padding-bottom: 76px; max-width: 34rem; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
 .hero-hello {
   margin-bottom: 18px;
   font-size: clamp(48px, 4.8vw, 72px);
@@ -201,7 +203,8 @@ a:hover .arrow-down { transform: translateY(3px); }
 /* Selected work: one consistent entry per project. Each starts on its own ink rule
    with a number and category, so neighbours never read as one continuous story. */
 .work { padding-bottom: 48px; }
-.work > .section-title { padding-top: 0; border-top: 0; margin-bottom: 20px; color: var(--muted); }
+/* The label tucks up beside the hero so the portrait sits directly on the first rule. */
+.work > .section-title { padding-top: 0; border-top: 0; margin: -38px 0 18px; color: var(--muted); }
 .entry {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -436,7 +439,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 
 /* Tablet: keep the hero side by side, with equal columns */
 @media (max-width: 900px) {
-  .hero { padding-top: calc(var(--header) + 48px); padding-bottom: 88px; }
+  .hero { padding-top: calc(var(--header) + 48px); }
   .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 40px; }
   .hero-hello { font-size: 48px; }
   .hero-intro { font-size: 16.5px; }
@@ -464,7 +467,11 @@ a:hover .arrow-down { transform: translateY(3px); }
 /* Small tablets and phones: hero stacks, composition first */
 @media (max-width: 700px) {
   .hero-grid { grid-template-columns: 1fr; row-gap: 36px; }
+  .hero { padding-bottom: 72px; }
   .hero-frame { width: min(100%, 420px); justify-self: start; order: -1; }
+  .hero-stage { border-bottom: 1px solid var(--text); }
+  .hero-intro { padding-bottom: 0; }
+  .work > .section-title { margin: 0 0 18px; }
   .hero-intro { max-width: 36rem; font-size: 17px; }
 }
 
