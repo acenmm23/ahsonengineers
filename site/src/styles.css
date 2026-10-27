@@ -89,7 +89,9 @@ a:hover .arrow-down { transform: translateY(3px); }
 
 /* Hero
    Left: the introduction. Right: the name/portrait composition. */
-.hero { padding: calc(var(--header) + 64px) 0 0; }
+/* The first ink rule is the hero's own bottom border, so the portrait (cropped at the
+   bottom of its stage) ends exactly on it at every width. */
+.hero { padding: calc(var(--header) + 64px) 0 0; border-bottom: 1px solid var(--text); }
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
@@ -202,8 +204,9 @@ a:hover .arrow-down { transform: translateY(3px); }
 /* Selected work: one consistent entry per project. Each starts on its own ink rule
    with a number and category, so neighbours never read as one continuous story. */
 .work { padding-bottom: 48px; }
-/* The label tucks up beside the hero so the portrait sits directly on the first rule. */
-.work > .section-title { padding-top: 0; border-top: 0; margin: -38px 0 18px; color: var(--muted); }
+/* The label sits just above that rule, beside the hero; the first entry starts on it. */
+.work > .section-title { padding-top: 0; border-top: 0; margin: -38px 0 0; height: 38px; color: var(--muted); }
+.entry:first-child { border-top: 0; }
 .entry {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -466,11 +469,12 @@ a:hover .arrow-down { transform: translateY(3px); }
 /* Small tablets and phones: hero stacks, composition first */
 @media (max-width: 700px) {
   .hero-grid { grid-template-columns: 1fr; row-gap: 36px; }
-  .hero { padding-bottom: 72px; }
+  .hero { padding-bottom: 72px; border-bottom: 0; }
   .hero-frame { width: min(100%, 420px); justify-self: start; order: -1; }
   .hero-stage { border-bottom: 1px solid var(--text); }
   .hero-intro { padding-bottom: 0; }
-  .work > .section-title { margin: 0 0 18px; }
+  .work > .section-title { margin: 0 0 18px; height: auto; }
+  .entry:first-child { border-top: 1px solid var(--text); }
   .hero-intro { max-width: 36rem; font-size: 17px; }
 }
 
