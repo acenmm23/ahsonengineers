@@ -70,14 +70,16 @@ function Hero() {
 
         <div className="hero-intro" id="about">
           <p className="hero-hello">hey!</p>
+          <p>A lot of what I build starts with a problem that seems harder than it should be.</p>
           <p>
-            I'm an electrical engineering student at UC Santa Cruz, and I like turning ideas into
-            things that actually work. A lot of that means building an imperfect first version,
-            figuring out what went wrong, and working through the next one.
+            I'm Ahson, an electrical engineering student at UC Santa Cruz. theBetterKey started
+            with wanting a simpler way to unlock a door. Little Ledger came from seeing how much
+            paperwork my mom handles running her daycare.
           </p>
           <p>
-            Right now I'm developing BetterKey, building Little Ledger for small daycare providers,
-            and documenting what I learn along the way.
+            I like getting something testable built early, seeing what breaks, and making the next
+            version better. I'd rather find out where something fails today than spend another week
+            optimizing the wrong design.
           </p>
           <dl className="hero-facts">
             <div><dt>Studying</dt><dd>B.S. Electrical Engineering, UC Santa Cruz, expected 2027</dd></div>
