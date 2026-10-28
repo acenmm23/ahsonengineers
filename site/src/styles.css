@@ -98,18 +98,18 @@ a:hover .arrow-down { transform: translateY(3px); }
    meet at the centre of the column gap (--g / 2), so the step reads as one line. */
 .hero { padding: calc(var(--header) + 48px) 0 0; }
 .hero-grid {
-  /* The right column is just wide enough for the name ("Momin" ends at ~85% of the
-     440px composition), so the name ends on the page's right edge, in line with the
-     project images. The frame's empty last 15% overhangs into the page margin. */
+  /* The right column is wider than the composition, which is centred in it, so the name
+     sits in from the edge while the raised rule still runs to the page's right edge, in
+     line with the project images. */
   --g: clamp(40px, 4.5vw, 72px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 384px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 620px);
   /* Row 2 is only as tall as the work heading, so the step stays shallow; row 1 takes
      the rest of the intro's height and the composition sits at its bottom. */
   grid-template-rows: 1fr auto;
   column-gap: var(--g);
 }
-.hero-left { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; justify-content: flex-end; margin-left: calc(var(--g) / -2); padding-left: calc(var(--g) / 2); border-bottom: 1px solid var(--text); }
+.hero-left { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin-left: calc(var(--g) / -2); padding-left: calc(var(--g) / 2); border-bottom: 1px solid var(--text); }
 .hero-frame { container-type: inline-size; width: 440px; }
 /* Cut the frame's empty overhang at the page edge so it never adds sideways scroll. */
 .hero-left { overflow-x: clip; }
@@ -247,8 +247,10 @@ a:hover .arrow-down { transform: translateY(3px); }
 }
 /* A quiet lead-in to the projects, deliberately smaller than the hero type. */
 .work-lead h2 {
-  /* Centred under the torso: the hoodie's centre sits at ~48.5% of the 440px frame. */
+  /* Same box as the frame above, so the text centres under the torso (the hoodie's
+     centre sits at ~48.5% of the 440px frame). */
   width: 427px;
+  margin-left: calc((100% - 440px) / 2);
   text-align: center;
   font-family: var(--display);
   font-size: clamp(24px, 2vw, 30px);
@@ -484,7 +486,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero { padding-top: calc(var(--header) + 48px); }
   .hero-grid { --g: 40px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
   .hero-frame { width: 100%; }
-  .work-lead h2 { width: 97%; }
+  .work-lead h2 { width: 97%; margin-left: 0; }
   .hero-hello { font-size: 36px; }
   .hero-intro { font-size: 16.5px; }
 
