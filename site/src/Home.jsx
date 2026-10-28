@@ -81,9 +81,9 @@ function Hero() {
             I haven't learned yet.
           </p>
           <p>
-            I try to build something testable early, see what breaks, and improve the next version.
-            I'd rather find out where something fails today than spend another week optimizing the
-            wrong design.
+            My build ethos is simple: fail as fast as possible. Get something testable early, see
+            what breaks, and improve the next version. I'd rather discover a flaw today than spend
+            another week optimizing the wrong design.
           </p>
         </div>
 
