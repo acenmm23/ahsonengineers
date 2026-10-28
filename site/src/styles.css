@@ -90,26 +90,29 @@ a:hover .arrow-down { transform: translateY(3px); }
 .header nav a:hover { color: var(--text); }
 
 /* Hero
-   Wide screens: a two-column grid. Left, row 1: the name/portrait composition; its
-   wrapper's bottom border is the raised part of the ink rule, so the torso ends on it.
-   Left, row 2: the work heading, whose right border is the vertical drop. Right, both
-   rows: the intro, whose bottom border is the lower part of the rule. The borders meet
-   at the centre of the column gap (--g / 2), so the step reads as one line. */
+   Wide screens: a two-column grid. Left, row 1: the intro, its text on the same left
+   edge as the project grid. Left, row 2: the study details, whose bottom border is the
+   lower part of the ink rule. Right, row 1: the name/portrait composition; its
+   wrapper's bottom border is the raised part of the rule, so the torso ends on it.
+   Right, row 2: the work heading, whose left border is the vertical drop. The borders
+   meet at the centre of the column gap (--g / 2), so the step reads as one line. */
 .hero { padding: calc(var(--header) + 48px) 0 0; }
 .hero-grid {
-  /* The left column is just wide enough for the name ("Momin" ends at ~85% of the
-     440px composition), so the raised rule drops right after it. The frame keeps its
-     full width and overhangs into the gap, which is empty there. */
+  /* The right column is just wide enough for the name ("Momin" ends at ~85% of the
+     440px composition), so the name ends on the page's right edge, in line with the
+     project images. The frame's empty last 15% overhangs into the page margin. */
   --g: clamp(40px, 4.5vw, 72px);
   display: grid;
-  grid-template-columns: minmax(0, 384px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 384px);
   /* Row 2 is only as tall as the work heading, so the step stays shallow; row 1 takes
      the rest of the intro's height and the composition sits at its bottom. */
   grid-template-rows: 1fr auto;
   column-gap: var(--g);
 }
-.hero-left { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; justify-content: flex-end; margin-right: calc(var(--g) / -2); border-bottom: 1px solid var(--text); }
+.hero-left { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; justify-content: flex-end; margin-left: calc(var(--g) / -2); padding-left: calc(var(--g) / 2); border-bottom: 1px solid var(--text); }
 .hero-frame { container-type: inline-size; width: 440px; }
+/* Cut the frame's empty overhang at the page edge so it never adds sideways scroll. */
+.hero-left { overflow-x: clip; }
 
 
 /* One scalable composition: type, portrait and mask are sized in cqw of the frame, so
@@ -189,24 +192,24 @@ a:hover .arrow-down { transform: translateY(3px); }
 }
 
 .hero-intro {
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 1;
   align-self: end;
   padding: 8px 0 28px;
 }
-/* Right of the step, level with "things I've made": the study details, sitting on the
+/* Left of the step, level with "things I've made": the study details, sitting on the
    lower part of the rule. */
 .hero-facts-row {
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 2;
-  margin-left: calc(var(--g) / -2);
-  padding: 4px 0 6px calc(var(--g) / 2);
+  margin-right: calc(var(--g) / -2);
+  padding: 4px calc(var(--g) / 2) 6px 0;
   border-bottom: 1px solid var(--text);
 }
-.hero-facts-row > * { max-width: 36rem; margin-left: auto; margin-right: auto; }
+.hero-facts-row > * { max-width: 36rem; }
 /* The intro block is centred in the space right of the step, so it sits balanced between
    the drop and the right edge instead of crowding the name. */
-.hero-intro > * { max-width: 36rem; margin-left: auto; margin-right: auto; }
+.hero-intro > * { max-width: 36rem; }
 .hero-intro { font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
 .hero-hello {
   margin-bottom: 18px;
@@ -236,11 +239,11 @@ a:hover .arrow-down { transform: translateY(3px); }
    scannable as more projects are added. */
 .work { padding: 56px 0 56px; }
 .work-lead {
-  grid-column: 1;
+  grid-column: 2;
   grid-row: 2;
-  margin-right: calc(var(--g) / -2);
-  padding: 18px calc(var(--g) / 2) 18px 0;
-  border-right: 1px solid var(--text);
+  margin-left: calc(var(--g) / -2);
+  padding: 18px 0 18px calc(var(--g) / 2);
+  border-left: 1px solid var(--text);
 }
 /* A quiet lead-in to the projects, deliberately smaller than the hero type. */
 .work-lead h2 {
@@ -479,7 +482,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 /* Tablet: keep the hero side by side, with equal columns */
 @media (max-width: 900px) {
   .hero { padding-top: calc(var(--header) + 48px); }
-  .hero-grid { --g: 40px; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+  .hero-grid { --g: 40px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
   .hero-frame { width: 100%; }
   .work-lead h2 { width: 97%; }
   .hero-hello { font-size: 36px; }
@@ -503,12 +506,11 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero-grid { grid-template-columns: 1fr; grid-template-rows: none; row-gap: 36px; }
   .hero-left, .hero-intro, .hero-facts-row, .work-lead { grid-column: 1; grid-row: auto; margin: 0; }
   .hero-facts-row { padding: 0; border-bottom: 0; border-top: 1px solid var(--rule); }
-  .hero-facts-row > * { margin-left: 0; }
+  .hero-left { padding-left: 0; }
   .hero-frame { width: min(100%, 440px); }
   .hero-intro { padding: 0; }
-  .work-lead { padding: 40px 0 0; border-right: 0; }
+  .work-lead { padding: 40px 0 0; border-left: 0; }
   .work-lead h2 { width: auto; text-align: left; }
-  .hero-intro > * { margin-left: 0; }
   .work { padding-top: 40px; }
   .entries { grid-template-columns: 1fr; row-gap: 56px; }
   .entry-summary { font-size: 16px; }
