@@ -75,7 +75,7 @@ function Hero() {
             better way.
           </p>
           <p>
-            BetterKey started with wanting a simpler way to unlock a door. Little Ledger came from
+            theBetterKey started with wanting a simpler way to unlock a door. Little Ledger came from
             watching my mom deal with the paperwork behind her daycare. I like following those
             problems wherever the solution leads, whether that's CAD, circuits, code, or something
             I haven't learned yet.

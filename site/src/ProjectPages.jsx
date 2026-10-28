@@ -63,7 +63,7 @@ export function BetterKeyPage() {
         lede="Building the simplest possible solution is often a complicated engineering process."
       >
         <p className="body">
-          BetterKey is a retrofit for the deadbolt you already have. A dedicated RF key fob operates
+          theBetterKey is a retrofit for the deadbolt you already have. A dedicated RF key fob operates
           it, the way you unlock a car, while the existing lock and key keep working by hand. The
           idea is simple. Getting a motor, batteries and electronics to fit neatly on the back of a
           door is where most of the engineering has gone.
@@ -87,7 +87,7 @@ export function BetterKeyPage() {
             <Figure
               image={media.betterkeyCad}
               sizes="(max-width: 900px) 100vw, 880px"
-              alt="CAD model of the V4A3 BetterKey enclosure in Fusion 360, with two cylindrical batteries side by side under a sliding lid"
+              alt="CAD model of the V4A3 theBetterKey enclosure in Fusion 360, with two cylindrical batteries side by side under a sliding lid"
               label="CAD model · V4A3"
               caption="The current design in Fusion 360, with the sliding battery lid partly open."
               eager
@@ -111,7 +111,7 @@ export function BetterKeyPage() {
           <Figure
             image={media.betterkeyV1V4}
             sizes="(max-width: 900px) 100vw, 1320px"
-            alt="A small white BetterKey enclosure labeled V4 next to the much larger green V1 enclosure, side by side on a notebook"
+            alt="A small white theBetterKey enclosure labeled V4 next to the much larger green V1 enclosure, side by side on a notebook"
             label="Printed prototypes · V4 and V1"
             caption="V4 (white) beside V1 (green), both printed. The difference in size is the story of every version in between."
           />
@@ -132,7 +132,7 @@ export function BetterKeyPage() {
           <Figure
             image={media.betterkeyPrints}
             sizes="(max-width: 900px) 100vw, 880px"
-            alt="Several 3D-printed BetterKey enclosures in navy, orange, green and white on a desk with a gearmotor, battery pack and digital calipers"
+            alt="Several 3D-printed theBetterKey enclosures in navy, orange, green and white on a desk with a gearmotor, battery pack and digital calipers"
             label="Printed prototypes"
             caption="Enclosures from several iterations, with a gearmotor, a battery pack and calipers on the desk."
           />

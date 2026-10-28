@@ -48,7 +48,7 @@ export const projects = [
   {
     slug: 'betterkey',
     href: '/projects/betterkey/',
-    title: 'BetterKey',
+    title: 'theBetterKey',
     category: 'Hardware Product Development',
     disciplines: ['Mechanical Design', 'Embedded Systems', 'Rapid Prototyping'],
     summary:
@@ -91,7 +91,7 @@ export const projects = [
 
 export const projectBySlug = Object.fromEntries(projects.map((p) => [p.slug, p]))
 
-// Door-test footage. `chapter` places each clip in the BetterKey story: 'now' for the
+// Door-test footage. `chapter` places each clip in the theBetterKey story: 'now' for the
 // current mechanical version (shown first), 'v1' for the original prototype.
 export const betterkeyVideos = [
   {
