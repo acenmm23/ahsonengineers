@@ -85,15 +85,14 @@ function Hero() {
             I'd rather find out where something fails today than spend another week optimizing the
             wrong design.
           </p>
+        </div>
+
+        {/* Sits right of the step, on the lower rule, level with "things I've made". */}
+        <div className="hero-facts-row">
           <dl className="hero-facts">
             <div><dt>Studying</dt><dd>B.S. Electrical Engineering, UC Santa Cruz, expected 2027</dd></div>
             <div><dt>Into</dt><dd>Electronics, embedded systems, hardware, product design</dd></div>
           </dl>
-          <ul className="hero-links text-links">
-            <li><a href="#work">Explore my work <Arrow dir="down" /></a></li>
-            <li><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a></li>
-            <li><a href={links.instagram} target="_blank" rel="noreferrer">Instagram <Arrow /></a></li>
-          </ul>
         </div>
 
         <div className="work-lead" id="work">

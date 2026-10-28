@@ -190,11 +190,20 @@ a:hover .arrow-down { transform: translateY(3px); }
 
 .hero-intro {
   grid-column: 2;
-  grid-row: 1 / span 2;
+  grid-row: 1;
+  align-self: end;
+  padding: 8px 0 28px;
+}
+/* Right of the step, level with "things I've made": the study details, sitting on the
+   lower part of the rule. */
+.hero-facts-row {
+  grid-column: 2;
+  grid-row: 2;
   margin-left: calc(var(--g) / -2);
-  padding: 8px 0 56px calc(var(--g) / 2);
+  padding: 4px 0 6px calc(var(--g) / 2);
   border-bottom: 1px solid var(--text);
 }
+.hero-facts-row > * { max-width: 36rem; margin-left: auto; margin-right: auto; }
 /* The intro block is centred in the space right of the step, so it sits balanced between
    the drop and the right edge instead of crowding the name. */
 .hero-intro > * { max-width: 36rem; margin-left: auto; margin-right: auto; }
@@ -208,11 +217,10 @@ a:hover .arrow-down { transform: translateY(3px); }
   font-family: var(--display);
 }
 .hero-intro > p + p { margin-top: 14px; }
-.hero-facts { margin-top: 28px; border-bottom: 1px solid var(--rule); font-size: 14px; line-height: 1.45; }
-.hero-facts > div { display: grid; grid-template-columns: 84px 1fr; gap: 16px; padding: 10px 0; border-top: 1px solid var(--rule); }
+.hero-facts { font-size: 14px; line-height: 1.45; }
+.hero-facts > div { display: grid; grid-template-columns: 84px 1fr; gap: 16px; padding: 10px 0; }
+.hero-facts > div + div { border-top: 1px solid var(--rule); }
 .hero-facts dt { color: var(--muted); }
-.hero-links { display: flex; flex-wrap: wrap; gap: 4px 28px; margin-top: 22px; font-size: 15px; font-weight: 600; }
-.hero-links a { display: inline-block; padding: 8px 0; }
 
 /* Section labels */
 .section-title {
@@ -493,9 +501,11 @@ a:hover .arrow-down { transform: translateY(3px); }
 @media (max-width: 700px) {
   /* No room for the step: composition, intro, then the work heading, stacked. */
   .hero-grid { grid-template-columns: 1fr; grid-template-rows: none; row-gap: 36px; }
-  .hero-left, .hero-intro, .work-lead { grid-column: 1; grid-row: auto; margin: 0; }
+  .hero-left, .hero-intro, .hero-facts-row, .work-lead { grid-column: 1; grid-row: auto; margin: 0; }
+  .hero-facts-row { padding: 0; border-bottom: 0; border-top: 1px solid var(--rule); }
+  .hero-facts-row > * { margin-left: 0; }
   .hero-frame { width: min(100%, 440px); }
-  .hero-intro { padding: 0; border-bottom: 0; }
+  .hero-intro { padding: 0; }
   .work-lead { padding: 40px 0 0; border-right: 0; }
   .work-lead h2 { width: auto; text-align: left; }
   .hero-intro > * { margin-left: 0; }
