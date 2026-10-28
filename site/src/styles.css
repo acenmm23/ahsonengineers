@@ -241,6 +241,9 @@ a:hover .arrow-down { transform: translateY(3px); }
 .work-lead {
   grid-column: 2;
   grid-row: 2;
+  /* Centre the heading vertically between the raised rule and the lower one. */
+  display: flex;
+  align-items: center;
   margin-left: calc(var(--g) / -2);
   padding: 18px 0 18px calc(var(--g) / 2);
   border-left: 1px solid var(--text);
@@ -511,7 +514,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero-left { padding-left: 0; }
   .hero-frame { width: min(100%, 440px); }
   .hero-intro { padding: 0; }
-  .work-lead { padding: 40px 0 0; border-left: 0; }
+  .work-lead { display: block; padding: 40px 0 0; border-left: 0; }
   .work-lead h2 { width: auto; text-align: left; }
   .work { padding-top: 40px; }
   .entries { grid-template-columns: 1fr; row-gap: 56px; }

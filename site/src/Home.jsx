@@ -97,7 +97,7 @@ function Hero() {
 
         <div className="work-lead" id="work">
           <h2 id="work-title">
-            things I've made
+            things i've made
             <svg className="work-arrow" viewBox="0 0 16 36" aria-hidden="true">
               <path d="M8 0v34M1.5 27.5 8 34l6.5-6.5" fill="none" stroke="currentColor" strokeWidth="2" />
             </svg>
