@@ -210,7 +210,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 .hero-intro { font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; letter-spacing: -0.005em; }
 .hero-hello {
   margin-bottom: 18px;
-  font-size: clamp(48px, 4.8vw, 72px);
+  font-size: clamp(36px, 3.2vw, 48px);
   line-height: 1;
   letter-spacing: -0.035em;
   font-weight: 700;
@@ -482,7 +482,7 @@ a:hover .arrow-down { transform: translateY(3px); }
   .hero-grid { --g: 40px; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
   .hero-frame { width: 100%; }
   .work-lead h2 { width: 97%; }
-  .hero-hello { font-size: 48px; }
+  .hero-hello { font-size: 36px; }
   .hero-intro { font-size: 16.5px; }
 
   .entries { row-gap: 56px; }
