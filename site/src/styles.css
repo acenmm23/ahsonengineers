@@ -1,4 +1,7 @@
 :root {
+  /* Light only: "only" also stops browsers (Chrome, Samsung Internet) from force-darkening
+     the page, which inverts the palette and the name/portrait layering. */
+  color-scheme: only light;
   --bg: #f6f5f1;
   --text: #1c1c1a;
   --muted: #666660;
