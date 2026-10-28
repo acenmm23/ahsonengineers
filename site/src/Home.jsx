@@ -108,8 +108,9 @@ function Hero() {
   )
 }
 
-// Hovering (or focusing) an entry slides through its images; on touch screens the
-// strip can be swiped. It always returns to the first image when the pointer leaves.
+// Hovering (or focusing) an entry slides through its images; on touch screens they play
+// while the entry is in view, and the strip can also be swiped. It always returns to the
+// first image when the entry becomes inactive.
 const SLIDE_MS = 2200
 
 function Slides({ slides, active }) {
@@ -148,14 +149,28 @@ function Slides({ slides, active }) {
   )
 }
 
+// Touch screens have no hover, so there an entry's slides play while its image is
+// mostly on screen, and stop once it scrolls away.
+function useInViewOnTouch(ref, setActive) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el || !window.matchMedia('(hover: none)').matches || !('IntersectionObserver' in window)) return undefined
+    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { threshold: 0.75 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [ref, setActive])
+}
+
 function Entry({ project, index }) {
   const p = project
   const [active, setActive] = useState(false)
+  const mediaRef = useRef(null)
+  useInViewOnTouch(mediaRef, setActive)
   const on = () => setActive(true)
   const off = (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setActive(false) }
   return (
     <li className="entry" onMouseEnter={on} onMouseLeave={() => setActive(false)} onFocus={on} onBlur={off}>
-      <a className="entry-media" href={p.href} tabIndex={-1} aria-hidden="true">
+      <a className="entry-media" href={p.href} tabIndex={-1} aria-hidden="true" ref={mediaRef}>
         {p.slides ? <Slides slides={p.slides} active={active} /> : <LittleLedgerPanel />}
       </a>
       <p className="entry-meta">

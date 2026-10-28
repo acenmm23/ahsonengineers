@@ -417,6 +417,8 @@ a:hover .arrow-down { transform: translateY(3px); }
 .figure img { width: 100%; background: var(--placeholder); }
 .figure figcaption { margin-top: 12px; max-width: 72ch; font-size: 14px; line-height: 1.5; color: var(--muted); }
 .figure figcaption .mono { display: block; margin-bottom: 4px; color: var(--text); }
+.figure-zoom { display: block; cursor: zoom-in; }
+.figure-zoom-link { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; white-space: nowrap; }
 .figure-video video { width: 100%; max-width: 360px; aspect-ratio: 9 / 16; object-fit: cover; background: var(--dark); }
 .figure-lead { margin: 64px 0 56px; }
 .figure-lead .ll-panel { aspect-ratio: 4 / 1; }
@@ -529,17 +531,61 @@ a:hover .arrow-down { transform: translateY(3px); }
   .header .narrow-only { display: inline; }
   .header nav { gap: 22px; }
   .header nav a { font-size: 14px; }
-  .hero { padding-top: calc(var(--header) + 28px); }
-  .hero-grid { row-gap: 28px; }
-  .hero-frame { width: 84%; }
-  .hero-hello { margin-bottom: 14px; }
-  .hero-intro { font-size: 17px; }
-  .hero-facts > div { grid-template-columns: 72px 1fr; gap: 12px; }
+  /* Phone hero: the composition opens the page and sits on its own ink rule, then the
+     intro reads as a single comfortable column. */
+  .hero { padding-top: calc(var(--header) + 20px); }
+  .hero-grid { row-gap: 26px; }
+  .hero-frame { width: 92%; }
+  .hero-hello { margin-bottom: 12px; font-size: 34px; }
+  .hero-intro { font-size: 16.5px; line-height: 1.55; }
+  .hero-intro > p + p { margin-top: 12px; }
+  .hero-facts-row { border-top: 1px solid var(--rule); }
+  .hero-facts { font-size: 13.5px; }
+  .hero-facts > div { grid-template-columns: 72px 1fr; gap: 12px; padding: 9px 0; }
 
+  /* The step, scaled down: a corner of the ink rule (across, then down) frames the
+     work heading, echoing the stepped line on larger screens. */
+  .work-lead { margin-top: 16px; padding: 14px 0 0 14px; border-top: 1px solid var(--text); border-left: 1px solid var(--text); }
+  .work-lead h2 { font-size: 26px; }
+  .work { padding: 28px 0 40px; }
 
-  .journey { padding: 88px 0; }
-  .contact { padding-top: 72px; }
-  .footer { flex-direction: column; margin-top: 88px; }
+  /* Project cards: compact, one clear block each, separated by a hairline. */
+  .entries { row-gap: 0; }
+  .entry + .entry { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--rule); }
+  .entry-media .ll-panel, .slides img { aspect-ratio: 3 / 2; }
+  .entry-meta { margin-top: 14px; gap: 10px; }
+  .entry-category { font-size: 10.5px; letter-spacing: 0.06em; }
+  .entry-title { margin-top: 8px; font-size: 30px; }
+  .entry-body { margin-top: 10px; }
+  .entry-summary { font-size: 15.5px; line-height: 1.55; }
+  .entry-status { padding-top: 12px; font-size: 13.5px; }
+  .explore { margin-top: 12px; padding: 8px 0; }
+  .slide-dots { left: 12px; bottom: 12px; }
+
+  /* Creator journey: the photo runs edge to edge, like a magazine spread. */
+  .journey { padding: 0 0 72px; }
+  .journey-grid { gap: 36px; }
+  .journey-portrait { max-width: none; margin: 0 calc(-1 * var(--gutter)); }
+  .journey-portrait img { aspect-ratio: 4 / 4.4; object-position: 50% 26%; }
+  .journey-copy h2 { font-size: 40px; }
+  .journey-lede { margin-top: 20px; max-width: none; font-size: 20px; }
+  .journey-copy p:not(.journey-lede) { font-size: 16px; }
+  .cta { margin-top: 24px; font-size: 17px; }
+
+  /* Contact: the address always fits on one line. */
+  .contact { padding-top: 64px; }
+  .contact-email { margin-top: 28px; font-size: min(7.4vw, 40px); white-space: nowrap; overflow-wrap: normal; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+  .contact-links { gap: 0 28px; margin-top: 20px; font-size: 16px; }
+  .footer { flex-direction: column; gap: 4px; margin-top: 64px; }
+
+  /* Project pages: number and category on one line, then the title. */
+  .project-page { padding-top: calc(var(--header) + 16px); }
+  .project-id { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-bottom: 14px; }
+  .project-id .project-disciplines { flex-basis: 100%; }
+  .project-title h1 { font-size: 42px; }
+  .lede { margin-top: 18px; font-size: 20px; }
+  .body { font-size: 16px; }
+  .next-project { padding-bottom: 24px; }
 
   .back-link { margin-bottom: 36px; }
   .story-note { margin-top: 64px; }

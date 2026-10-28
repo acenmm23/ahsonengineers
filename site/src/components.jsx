@@ -47,13 +47,17 @@ export function Photo({ image, alt, sizes, eager, className }) {
   )
 }
 
-export function Figure({ image, alt, sizes, label, caption, className = '', eager }) {
+// `zoomable` links the image to its full-size file, for detail that is too small to read
+// on a phone (the schematic).
+export function Figure({ image, alt, sizes, label, caption, className = '', eager, zoomable }) {
+  const photo = <Photo image={image} alt={alt} sizes={sizes} eager={eager} />
   return (
     <figure className={`figure ${className}`}>
-      <Photo image={image} alt={alt} sizes={sizes} eager={eager} />
+      {zoomable ? <a href={image.src} target="_blank" rel="noreferrer" className="figure-zoom">{photo}</a> : photo}
       <figcaption>
         {label && <span className="mono">{label}</span>}
         {caption}
+        {zoomable && <> <a href={image.src} target="_blank" rel="noreferrer" className="figure-zoom-link">Open full size <Arrow /></a></>}
       </figcaption>
     </figure>
   )

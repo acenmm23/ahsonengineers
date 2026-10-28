@@ -238,6 +238,7 @@ export function Ece118Page() {
         media={
           <Figure
             image={media.schematic}
+            zoomable
             sizes="(max-width: 900px) 100vw, 1320px"
             alt="Full schematic of the beacon detector: power and 1.65 V reference, phototransistor and transimpedance amplifier, eight band-pass stages, precision peak detector, comparator with hysteresis and LED output buffer"
             label="Full schematic, as built"
