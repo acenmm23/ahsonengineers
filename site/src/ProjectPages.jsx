@@ -195,11 +195,11 @@ export function RfPcbPage() {
 
       <Figure
         className="figure-lead"
-        image={media.pcbGlow}
+        image={media.pcbBoard}
         sizes="(max-width: 900px) 100vw, 1320px"
-        alt="All copper on the board: top-layer traces and pads bright, inner and bottom layers dimmer behind them, on a dark background"
-        label="All copper layers · routed"
-        caption="Top-layer copper in front, the inner signal layer and bottom layer dimmer behind it. The gap at the top centre is where the radio module's antenna sits."
+        alt="Top-down 3D view of the routed 64 by 21 millimetre board: protection diodes and battery input on the left, the radio module's pads at the top centre, the motor driver and capacitor on the right"
+        label="Routed board · KiCad 3D, top"
+        caption="Battery input and protection on the left, the radio module's pads at the top centre, the motor driver on the right. The module has no 3D model yet, so it shows as bare pads."
         eager
       />
 
