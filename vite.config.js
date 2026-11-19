@@ -16,6 +16,7 @@ export default defineConfig({
       input: {
         home: resolve(__dirname, 'site/index.html'),
         betterkey: resolve(__dirname, 'site/projects/betterkey/index.html'),
+        rfPcb: resolve(__dirname, 'site/projects/rf-pcb/index.html'),
         ece118: resolve(__dirname, 'site/projects/ece118/index.html'),
         littleLedger: resolve(__dirname, 'site/projects/little-ledger/index.html'),
       },

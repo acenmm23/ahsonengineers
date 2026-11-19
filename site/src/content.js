@@ -30,6 +30,14 @@ export const media = {
   schematic: photo('ece118-schematic', [2000, 1000], 2000, 1200),
   solderSide: photo('ece118-solder-side', [1400, 800], 1400, 933),
   labOverhead: photo('lab-overhead', [1206, 700], 1206, 1706),
+  // RF receiver PCB: exported from the routed KiCad 9 project with kicad-cli (layer SVGs
+  // recoloured, plus the 3D render and the schematic sheet). Sources in media-originals/pcb/.
+  pcbGlow: photo('pcb-glow', [2000, 1000], 2000, 743),
+  pcbGlowCard: photo('pcb-glow-card', [1280, 760], 1280, 800),
+  pcbPlacement: photo('pcb-placement', [1600, 800], 1600, 594),
+  pcbGround: photo('pcb-ground', [1600, 800], 1600, 594),
+  pcbRender: photo('pcb-render', [1600, 800], 1600, 846),
+  pcbSchematic: photo('pcb-schematic', [1800, 900], 1800, 1185),
 }
 
 // Hero cutout, used as supplied. `cleanup` hides leftover background around the cutout
@@ -59,6 +67,21 @@ export const projects = [
       { image: media.betterkeyPrints },
       { image: media.betterkeyV1V4 },
       { image: media.betterkeyCad },
+    ],
+  },
+  {
+    slug: 'rf-pcb',
+    href: '/projects/rf-pcb/',
+    title: 'RF Receiver PCB',
+    category: 'RF & Mixed-Signal PCB Design',
+    disciplines: ['KiCad', '4-Layer Layout', 'Power & Motor Drive'],
+    summary:
+      'The lock-side board for theBetterKey V2: 64 × 21 mm, four layers, a 2.4 GHz nRF54L15 radio module, a 3.0 V buck converter and a motor driver for the deadbolt motor.',
+    status: 'Routed with zero DRC and ERC errors; not yet fabricated.',
+    slides: [
+      { image: media.pcbGlowCard },
+      { image: media.pcbRender },
+      { image: media.pcbSchematic, contain: true },
     ],
   },
   {

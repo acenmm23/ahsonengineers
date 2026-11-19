@@ -169,6 +169,155 @@ export function BetterKeyPage() {
   )
 }
 
+export function RfPcbPage() {
+  const project = projectBySlug['rf-pcb']
+  return (
+    <ProjectLayout project={project}>
+      <ProjectHead
+        project={project}
+        lede="The board that turns theBetterKey from a bench of modules into one thing that fits behind a door."
+      >
+        <p className="body">
+          This is the lock-side receiver for theBetterKey V2. It listens for the fob over a 2.4 GHz
+          radio, runs off the two-cell battery pack, and drives the worm-gear motor that turns the
+          deadbolt. The whole circuit had to fit on a 64 × 21 mm strip so it can live inside the
+          enclosure next to the batteries and motor.
+        </p>
+        <Facts items={[
+          ['Board', '64 × 21 mm, 4 layers, 42 parts'],
+          ['Radio', 'Raytac AN54LV-15 module (Nordic nRF54L15) with an integrated antenna'],
+          ['Power', '2S CR123A pack, fuse, reverse-polarity diode and TVS, TI TPS629203 buck to 3.0 V'],
+          ['Motor', 'TI DRV8214 driver for the 6 V worm-gear motor'],
+          ['Status', 'Schematic and layout done in KiCad 9 with zero DRC and ERC errors. Not fabricated or tested yet.'],
+          ['Part of', <a href={projectBySlug.betterkey.href}>theBetterKey <Arrow /></a>],
+        ]} />
+      </ProjectHead>
+
+      <Figure
+        className="figure-lead"
+        image={media.pcbGlow}
+        sizes="(max-width: 900px) 100vw, 1320px"
+        alt="All copper on the board: top-layer traces and pads bright, inner and bottom layers dimmer behind them, on a dark background"
+        label="All copper layers · routed"
+        caption="Top-layer copper in front, the inner signal layer and bottom layer dimmer behind it. The gap at the top centre is where the radio module's antenna sits."
+        eager
+      />
+
+      <p className="story-note mono">How it went, in order</p>
+
+      <Chapter
+        stage="01 · Schematic"
+        title="Start from what the board has to do"
+        wide
+        media={
+          <Figure
+            image={media.pcbSchematic}
+            zoomable
+            sizes="(max-width: 900px) 100vw, 1320px"
+            alt="Schematic sheet for the radio module, SWD programming pads and battery-voltage divider"
+            label="Schematic · sheet 2 of 3"
+            caption="The radio module with its programming pads, decoupling and battery-voltage measurement. The other two sheets cover power protection and the motor driver."
+          />
+        }
+      >
+        <p>
+          The circuit is split into three sheets: power and protection, the radio module with its
+          programming pads and battery measurement, and the motor driver. Every part in the BOM has an
+          exact orderable part number and a reason it was chosen. KiCad's electrical rules check
+          finishes with zero errors and zero warnings.
+        </p>
+      </Chapter>
+
+      <Chapter
+        stage="02 · Placement"
+        title="Fit it to the enclosure before routing anything"
+        wide
+        media={
+          <Figure
+            image={media.pcbPlacement}
+            sizes="(max-width: 900px) 100vw, 1320px"
+            alt="Component outlines and pads placed on the 64 by 21 millimetre board with no traces yet"
+            label="Placement study · 64 × 21 mm"
+            caption="Parts placed, no traces. Battery input and protection on the left, power conversion next, the radio module at the top edge, the motor driver and its output on the right."
+          />
+        }
+      >
+        <p>
+          I tried placements at 60 × 20 mm and 64 × 21 mm before routing a single trace. The order
+          follows the current: battery in and protection on the left, the buck converter next, the
+          radio in the middle against the top edge so its antenna has open space, and the motor
+          driver beside the motor connector on the right. The six SWD pads sit in the middle so a
+          pogo-pin fixture can reach them.
+        </p>
+      </Chapter>
+
+      <Chapter stage="03 · Routing" title="Route the sensitive parts by hand">
+        <p>
+          The buck converter's switch node is the noisiest net on the board, so I rotated the
+          regulator and moved the inductor until that connection was a single 2.56 mm top-layer
+          trace with no via. The motor driver's supply capacitor moved right next to its pin, and the
+          battery and motor nets use a wider 0.40 mm class.
+        </p>
+        <p>
+          With those set, I used Freerouting for the remaining signal traces and checked the result
+          in KiCad: 0.15 mm clearance, 0.18 mm signal width, 0.6 / 0.3 mm vias.
+        </p>
+      </Chapter>
+
+      <Chapter
+        stage="04 · RF"
+        title="Keep copper away from the antenna"
+        wide
+        media={
+          <Figure
+            image={media.pcbGround}
+            sizes="(max-width: 900px) 100vw, 1320px"
+            alt="The first inner layer as one continuous ground fill, with a rectangular cut-out at the top centre under the antenna"
+            label="Inner layer 1 · ground plane"
+            caption="One continuous ground plane under everything, with the antenna keep-out cut out at the top. Every via passes through it."
+          />
+        }
+      >
+        <p>
+          The first inner layer is a solid ground plane, which gives every signal a short return path.
+          Under the module's antenna, a keep-out area blocks traces, vias and copper pours on all four
+          layers. What still has to be checked is the antenna's clearance from the batteries,
+          enclosure and the metal of the lock once everything is assembled.
+        </p>
+      </Chapter>
+
+      <Chapter
+        stage="05 · Checks"
+        title="Zero errors before anything is ordered"
+        wide
+        media={
+          <Figure
+            image={media.pcbRender}
+            sizes="(max-width: 900px) 100vw, 1320px"
+            alt="KiCad 3D render of the populated board at an angle"
+            label="KiCad 3D render"
+            caption="The radio module and inductor have no 3D models yet, so they show as bare pads."
+          />
+        }
+      >
+        <p>
+          KiCad reports zero design-rule violations, zero unconnected pads and zero footprint errors,
+          and the schematic and board match. That proves the files are consistent. It does not prove
+          the board works, which is what the first prototype is for.
+        </p>
+      </Chapter>
+
+      <Chapter stage="Next" title="Order it, then test it">
+        <p>
+          Mounting holes go in once the enclosure coordinates are fixed, then the fabricator's rules
+          get checked and the first boards get ordered. On the first prototype I'll check motor
+          start-up and stall current, supply transients and radio range through the enclosure.
+        </p>
+      </Chapter>
+    </ProjectLayout>
+  )
+}
+
 const beaconStages = [
   ['Power and reference', <>6–12 V in through a reverse-polarity diode and a 3.3 V low-dropout regulator. Two 12 kΩ resistors and a buffer make a <strong>1.65 V mid-rail (VREF)</strong>, so every stage can swing both ways on a single supply.</>],
   ['Pickup', <>An IR phototransistor feeds a <strong>transimpedance amplifier</strong> with 1 kΩ feedback. The gain is kept low on purpose so ambient light cannot saturate the first stage.</>],
