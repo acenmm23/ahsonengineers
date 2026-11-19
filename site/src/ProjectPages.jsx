@@ -195,11 +195,11 @@ export function RfPcbPage() {
 
       <Figure
         className="figure-lead"
-        image={media.pcbBoard}
+        image={media.pcb3d}
         sizes="(max-width: 900px) 100vw, 1320px"
-        alt="Top-down 3D view of the routed 64 by 21 millimetre board: protection diodes and battery input on the left, the radio module's pads at the top centre, the motor driver and capacitor on the right"
-        label="Routed board · KiCad 3D, top"
-        caption="Battery input and protection on the left, the radio module's pads at the top centre, the motor driver on the right. The module has no 3D model yet, so it shows as bare pads."
+        alt="3D view of the routed 64 by 21 millimetre board at an angle: protection diodes and battery input on the left, the radio module's pads at the top centre, the motor driver and bulk capacitor on the right"
+        label="Routed board · 3D"
+        caption="Battery input and protection on the left, the radio module's pads at the top centre, the motor driver and bulk capacitor on the right."
         eager
       />
 
@@ -210,6 +210,14 @@ export function RfPcbPage() {
         title="Start from what the board has to do"
         wide
         media={
+          <>
+          <Figure
+            image={media.pcbBlock}
+            sizes="(max-width: 900px) 100vw, 1320px"
+            alt="Block diagram: the off-board 2S CR123A pack feeds a protection block, then the battery rail splits to a 3.0 V buck converter powering the radio and MCU, a battery-sense divider into the MCU's ADC, and the DRV8214 motor driver for the 6 V worm-gear motor. SWD pads connect to the MCU, which controls the motor driver."
+            label="Block diagram"
+            caption="How power and signals move through the board. Dashed boxes are off-board."
+          />
           <Figure
             image={media.pcbSchematic}
             zoomable
@@ -218,6 +226,7 @@ export function RfPcbPage() {
             label="Schematic · sheet 2 of 3"
             caption="The radio module with its programming pads, decoupling and battery-voltage measurement. The other two sheets cover power protection and the motor driver."
           />
+          </>
         }
       >
         <p>
@@ -251,7 +260,21 @@ export function RfPcbPage() {
         </p>
       </Chapter>
 
-      <Chapter stage="03 · Routing" title="Route the sensitive parts by hand">
+      <Chapter
+        stage="03 · Routing"
+        title="Route the sensitive parts by hand"
+        wide
+        media={
+          <Figure
+            image={media.pcbLayout}
+            zoomable
+            sizes="(max-width: 900px) 100vw, 1320px"
+            alt="The routed board in the KiCad PCB editor, with red top-layer traces, part outlines and labels"
+            label="Routed layout · KiCad"
+            caption="The finished layout in the KiCad editor, top-layer copper in red. The keep-out at the top is marked for the antenna."
+          />
+        }
+      >
         <p>
           The buck converter's switch node is the noisiest net on the board, so I rotated the
           regulator and moved the inductor until that connection was a single 2.56 mm top-layer

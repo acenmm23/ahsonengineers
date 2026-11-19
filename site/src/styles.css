@@ -362,6 +362,11 @@ a:hover .arrow-down { transform: translateY(3px); }
   transition: text-decoration-color 0.2s;
 }
 .contact-email:hover { text-decoration-color: currentColor; }
+/* The address is a copy button; strip the native button look. */
+button.contact-email { padding: 0; border: 0; background: none; color: inherit; text-align: left; cursor: copy; }
+button.contact-email:focus-visible { outline: 2px solid currentColor; outline-offset: 6px; }
+.contact-email-hint { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 16px; font-size: 12px; color: var(--muted); }
+.contact-email-hint a { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .contact-links { display: flex; flex-wrap: wrap; gap: 4px 36px; margin-top: 32px; font-size: 17px; }
 .contact-links a { display: inline-block; padding: 8px 0; }
 .footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 120px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); }
@@ -577,7 +582,7 @@ a:hover .arrow-down { transform: translateY(3px); }
 
   /* Contact: the address always fits on one line. */
   .contact { padding-top: 64px; }
-  .contact-email { margin-top: 28px; font-size: min(7.4vw, 40px); white-space: nowrap; overflow-wrap: normal; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+  .contact-email { margin-top: 28px; font-size: min(6.6vw, 40px); white-space: nowrap; overflow-wrap: normal; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
   .contact-links { gap: 0 28px; margin-top: 20px; font-size: 16px; }
   .footer { flex-direction: column; gap: 4px; margin-top: 64px; }
 

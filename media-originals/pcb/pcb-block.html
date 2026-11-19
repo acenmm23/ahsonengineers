@@ -1,0 +1,108 @@
+<!doctype html>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500..900&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #f6f5f1; overflow: hidden; }
+  svg { display: block; width: 100vw; height: 100vh; }
+  .t { font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 27px; letter-spacing: -0.02em; fill: #1c1c1a; }
+  .s { font-family: 'IBM Plex Mono', monospace; font-size: 17px; fill: #666660; }
+  .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 15px; letter-spacing: 0.06em; fill: #666660; }
+  .head { font-family: 'IBM Plex Mono', monospace; font-size: 17px; letter-spacing: 0.12em; fill: #1c1c1a; }
+  .dark .t { fill: #f6f5f1; }
+  .dark .s { fill: rgba(246,245,241,.72); }
+  .box { fill: #fffefb; stroke: #1c1c1a; stroke-width: 2; }
+  .boxd { fill: #1c1c1a; stroke: #1c1c1a; stroke-width: 2; }
+  .off { fill: none; stroke: #1c1c1a; stroke-width: 2; stroke-dasharray: 7 6; }
+  .pwr { fill: none; stroke: #1c1c1a; stroke-width: 3.5; stroke-linejoin: round; }
+  .sig { fill: none; stroke: #8a8880; stroke-width: 2; stroke-linejoin: round; }
+  .dot { fill: #1c1c1a; }
+</style>
+<svg viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1c1c1a"/></marker>
+    <marker id="as" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a8880"/></marker>
+  </defs>
+
+  <!-- heading -->
+  <text class="head" x="80" y="92">BLOCK DIAGRAM · THEBETTERKEY V2 RECEIVER</text>
+  <text class="s" x="80" y="124">64 × 21 mm · 4 layers · 42 parts</text>
+
+  <!-- legend -->
+  <line class="pwr" x1="1112" y1="88" x2="1172" y2="88"/>
+  <text class="lbl" x="1186" y="93">POWER</text>
+  <line class="sig" x1="1300" y1="88" x2="1360" y2="88"/>
+  <text class="lbl" x="1374" y="93">SIGNAL</text>
+
+  <!-- battery (off-board) -->
+  <rect class="off" x="80" y="415" width="230" height="140" rx="12"/>
+  <text class="t" x="104" y="474">2S CR123A</text>
+  <text class="s" x="104" y="506">J1 · off-board pack</text>
+
+  <!-- protection -->
+  <rect class="box" x="380" y="415" width="250" height="140" rx="12"/>
+  <text class="t" x="404" y="466">Protection</text>
+  <text class="s" x="404" y="498">1 A fuse</text>
+  <text class="s" x="404" y="522">reverse diode · TVS</text>
+
+  <!-- power path -->
+  <path class="pwr" d="M310 485 H372" marker-end="url(#ap)"/>
+  <path class="pwr" d="M630 485 H700"/>
+  <path class="pwr" d="M700 270 V720"/>
+  <circle class="dot" cx="700" cy="485" r="7"/>
+  <text class="lbl" x="644" y="246">VM_BAT</text>
+  <path class="pwr" d="M700 270 H772" marker-end="url(#ap)"/>
+  <path class="pwr" d="M700 485 H772" marker-end="url(#ap)"/>
+  <path class="pwr" d="M700 720 H772" marker-end="url(#ap)"/>
+
+  <!-- buck -->
+  <rect class="box" x="780" y="200" width="260" height="140" rx="12"/>
+  <text class="t" x="804" y="256">Buck converter</text>
+  <text class="s" x="804" y="288">TPS629203 → 3.0 V</text>
+  <path class="pwr" d="M1040 270 H1152" marker-end="url(#ap)"/>
+  <text class="lbl" x="1060" y="256">+3V0</text>
+
+  <!-- battery sense -->
+  <rect class="box" x="780" y="430" width="260" height="110" rx="12"/>
+  <text class="t" x="804" y="478">Battery sense</text>
+  <text class="s" x="804" y="510">1 MΩ / 330 kΩ</text>
+  <path class="sig" d="M1040 485 H1110 V330 H1152" marker-end="url(#as)"/>
+  <text class="lbl" x="1052" y="474">ADC</text>
+
+  <!-- radio MCU -->
+  <g class="dark">
+    <rect class="boxd" x="1160" y="170" width="360" height="200" rx="12"/>
+    <text class="t" x="1186" y="232">Radio + MCU</text>
+    <text class="s" x="1186" y="266">AN54LV-15 · nRF54L15</text>
+    <text class="s" x="1186" y="292">2.4 GHz, integrated antenna</text>
+  </g>
+  <!-- antenna glyph -->
+  <g fill="none" stroke="#f6f5f1" stroke-width="2.5" stroke-linecap="round">
+    <line x1="1478" y1="206" x2="1478" y2="236"/>
+    <path d="M1466 212 a16 16 0 0 1 24 0"/>
+    <path d="M1458 202 a28 28 0 0 1 40 0"/>
+  </g>
+
+  <!-- SWD -->
+  <rect class="box" x="1330" y="450" width="190" height="100" rx="12"/>
+  <text class="t" x="1352" y="494">SWD pads</text>
+  <text class="s" x="1352" y="524">J3 · 2×3 pogo</text>
+  <path class="sig" d="M1440 450 V378" marker-end="url(#as)"/>
+
+  <!-- control: MCU to motor driver -->
+  <path class="sig" d="M1200 370 V600 H910 V642" marker-end="url(#as)"/>
+  <text class="lbl" x="1184" y="586" text-anchor="end">IN1/IN2 · SLEEP · I²C · FAULT</text>
+
+  <!-- motor driver -->
+  <rect class="box" x="780" y="650" width="260" height="140" rx="12"/>
+  <text class="t" x="804" y="706">Motor driver</text>
+  <text class="s" x="804" y="738">DRV8214</text>
+  <path class="pwr" d="M1040 720 H1152" marker-end="url(#ap)"/>
+
+  <!-- motor (off-board) -->
+  <rect class="off" x="1160" y="650" width="360" height="140" rx="12"/>
+  <text class="t" x="1186" y="706">6 V worm-gear motor</text>
+  <text class="s" x="1186" y="738">J2 · turns the deadbolt</text>
+
+  <!-- footnote -->
+  <text class="s" x="80" y="912">Dashed boxes are off-board. Values from the KiCad schematic and BOM.</text>
+</svg>

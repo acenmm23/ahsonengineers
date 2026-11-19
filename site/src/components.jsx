@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { links } from './content.js'
 
 const NAV = [
@@ -124,6 +125,60 @@ export function Header() {
   )
 }
 
+// Copies text to the clipboard. Falls back to a hidden textarea for browsers or
+// contexts where the async Clipboard API is unavailable. Resolves true on success.
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text)
+    return true
+  } catch {
+    const area = document.createElement('textarea')
+    area.value = text
+    area.setAttribute('readonly', '')
+    area.style.position = 'fixed'
+    area.style.opacity = '0'
+    document.body.appendChild(area)
+    area.select()
+    let ok = false
+    try { ok = document.execCommand('copy') } catch { ok = false }
+    area.remove()
+    return ok
+  }
+}
+
+// Clicking the address copies it; the hint underneath confirms. If copying fails,
+// it opens the visitor's mail app instead.
+function CopyEmail({ email }) {
+  const [state, setState] = useState('idle')
+  const timer = useRef(0)
+
+  useEffect(() => () => window.clearTimeout(timer.current), [])
+
+  async function onClick() {
+    const ok = await copyText(email)
+    if (!ok) {
+      window.location.href = `mailto:${email}`
+      return
+    }
+    setState('copied')
+    window.clearTimeout(timer.current)
+    timer.current = window.setTimeout(() => setState('idle'), 2200)
+  }
+
+  return (
+    <div className="contact-email-wrap">
+      <button type="button" className="contact-email" onClick={onClick}>
+        {email}
+      </button>
+      <p className="contact-email-hint mono">
+        <span aria-live="polite">{state === 'copied' ? 'Copied to clipboard' : 'Click to copy'}</span>
+        <span aria-hidden="true">·</span>
+        <a href={`mailto:${email}`}>Open in mail app</a>
+      </p>
+    </div>
+  )
+}
+
 export function Contact() {
   const elsewhere = [
     { label: 'GitHub', href: links.github },
@@ -136,7 +191,7 @@ export function Contact() {
     <section className="contact" id="contact" aria-labelledby="contact-title">
       <div className="shell">
         <h2 id="contact-title" className="section-title">Contact</h2>
-        <a className="contact-email" href={`mailto:${links.email}`}>{links.email}</a>
+        <CopyEmail email={links.email} />
         <ul className="contact-links">
           {elsewhere.map((l) => (
             <li key={l.label}><a href={l.href} target="_blank" rel="noreferrer">{l.label} <Arrow /></a></li>

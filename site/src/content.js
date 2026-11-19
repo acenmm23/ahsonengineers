@@ -3,7 +3,7 @@
 import cleanupMask from './assets/portrait-cleanup-mask.png'
 
 export const links = {
-  email: 'ahsonmomin@gmail.com',
+  email: 'ahsonmomin23@gmail.com',
   github: 'https://github.com/acenmm23',
   instagram: 'https://www.instagram.com/ahsonmade/',
   linkedin: 'https://www.linkedin.com/in/ahsonmomin',
@@ -33,8 +33,12 @@ export const media = {
   // RF receiver PCB: exported from the routed KiCad 9 project with kicad-cli (top-down 3D
   // render without silkscreen, layer SVGs, the angled render and the schematic sheet).
   // Full-size sources in media-originals/pcb/.
-  pcbBoard: photo('pcb-board', [2000, 1000], 2000, 745),
-  pcbBoardCard: photo('pcb-board-card', [1280, 760], 1280, 800),
+  pcb3d: photo('pcb-3d', [980, 640], 980, 336),
+  pcb3dCard: photo('pcb-3d-card', [1280, 760], 1280, 800),
+  pcbLayout: photo('pcb-layout', [1566, 800], 1566, 590),
+  pcbLayoutCard: photo('pcb-layout-card', [1280, 760], 1280, 800),
+  // Drawn from the schematic and BOM; source is media-originals/pcb/pcb-block.html.
+  pcbBlock: photo('pcb-block', [2000, 1000], 2000, 1250),
   pcbPlacement: photo('pcb-placement', [1600, 800], 1600, 594),
   pcbGround: photo('pcb-ground', [1600, 800], 1600, 594),
   pcbRender: photo('pcb-render', [1600, 800], 1600, 846),
@@ -80,9 +84,9 @@ export const projects = [
       'The lock-side board for theBetterKey V2: 64 × 21 mm, four layers, a 2.4 GHz nRF54L15 radio module, a 3.0 V buck converter and a motor driver for the deadbolt motor.',
     status: 'Routed with zero DRC and ERC errors; not yet fabricated.',
     slides: [
-      { image: media.pcbBoardCard },
-      { image: media.pcbRender },
-      { image: media.pcbSchematic, contain: true },
+      { image: media.pcb3dCard },
+      { image: media.pcbLayoutCard },
+      { image: media.pcbBlock },
     ],
   },
   {
